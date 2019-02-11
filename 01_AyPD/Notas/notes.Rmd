@@ -1,0 +1,187 @@
+---
+title: "Clase 01"
+author: "Pablo César Rodríguez Aguayo"
+date: "February 6, 2019"
+output: html_document
+---
+
+# Clase 01 
+
+## Instalación de R en Ubuntu 18.04
+1. __Add GPG Key:__ Logged into your Ubuntu 18.04 server as a sudo non-root user, add the relevant GPG key.
+> sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+
+2. __Add the R Repository__
+> sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
+
+3. __Update Package List__
+> sudo apt update
+
+4. Install R
+> sudo apt install r-base
+
+
+## Instalación de R Studio
+
+1. Descargar R Studio de: [https://www.rstudio.com/products/rstudio/#Desktop](https://www.rstudio.com/products/rstudio/#Desktop).
+
+2. Correr el archivo _.deb_.
+
+> sudo dpkg --install rstudio.deb
+
+
+# Consola de R, Entradas y Evaluación
+
+## Agregando entredas
+
+En la terminal de R Studio, escribimos las expresiones. El símbolo <- es el operador asignación.
+
+
+
+```{R Script}
+# variables
+a <- 5
+b <- 6
+print(a)
+
+msg <- "hello"
+msg
+```
+
+La gramática del lenguaje determina si la expresión está completa o no.
+```{R Script}
+# variables
+x <- NaN## expresión incompleta
+```
+
+
+# Tipos de Datos, Objetos de R y Atributos
+
+## Objetos 
+R tiene 5 tipos de datos básicos o clases atómicas de objetos.
+
+- character (cadenas de texto)
+- numeric(números reales)
+- integer (enteros)
+- complex
+- logical (True/False)
+
+El tipo de dato más común es el vector.
+- Un vector solo puede contener objetos de la misma clase.
+- PERO: La única excepcion es la _lista_, la cual está representada como un vector que puede contener objetos de diferentes clases.
+- Un vector vacío puede ser creado con la función _vector()_.
+
+## Números
+- Los números en R generalmente tratados como objetos numéricos (precisión de doble punto flotante)
+- Si explicitamente quieres un entero, agrega el subfijo __L__
+- También hay un número especial _Inf_ el cual representa el infinito. Igualmente puede utilizarse como un valor faltante.
+- _NaN_ representa un número no definido (Not a Number). Igualmente puede utilizarse como un valor faltante.
+
+## Atributos
+Los objetos en R puedenn tener atributos:
+- names, dimnames
+- dimensions(ej. matrices, arreglos)
+- class
+- length
+- y otros atributos utilizados por el usuario
+
+para acceder a los atributos se utiliza la función _atributes()_.
+
+
+# Vectores y Listas
+
+La función _c()_ puede utilizarse para crear vecotres de objetos
+```{R Script}
+x <- c(0.5, 0.6) ## numeric
+x
+x <- c(TRUE, FALSE) ## logical
+x
+x <- c(T, F) ## logical
+x
+x <- c("a", "b", "c") ## character
+x
+x <- 9:29 ## integer
+x
+x <- c(1+0i, 2+4i)## complex
+x
+```
+ Usando la función _vector()_
+ 
+```{R Vector}
+x <- vector("numeric", length = 10) ## numeric
+x
+```
+
+## Objetos Faltantes
+Cuando diferentes objetos están mezclados en un vector, ocurre la _coerción_ para que el vector tenga la misma clase.
+```{R Vector_r}
+y <- c(1.7, "a")
+y
+y <- c(TRUE, 2)
+y
+y <- c("a", TRUE)
+y
+```
+## Coerción Explicita
+Los objetos pueden coercer explicitamente de una clase a otra utilizando la función _as.*_ si está disponible.
+```{R Vector_r}
+x <- 0:6
+class(x)
+as.numeric(x)
+as.logical(x)
+as.character(x)
+```
+
+La coerción sin sentido resulta en _NAs_
+```{R Vector_r}
+x <- c("a", "b", "c")
+as.numeric(x)
+as.logical(x)
+as.complex(x)
+```
+
+## Matrices
+Las matrices son vectores con el atributo de dimensión. El atributo de dimension es un vector de enteros de tamaño 2. (fila, columna) --> (nrow, ncol)
+```{R Vector_r}
+m <- matrix(nrow = 2, ncol = 3)
+m
+dim(m)
+attributes(m)
+```
+
+Las matrices se construyen en base a las columnas, con el fin de que las entradas pueden comenzar desde la esquina superior izquierda y se puedan correr las columnas.
+```{R Vector_r}
+m <- matrix(1:6, nrow = 2, ncol = 3)
+m
+```
+
+Las matrices de igual manera pueden ser creadas directamente de vecotres agregando el atributo de diemnsión.
+```{R Vector_r}
+m <- 1:10 
+m
+dim(m) <- c(2, 5)
+m
+```
+
+## cbind-ing and rbind-ing
+
+Matrices can be created by _column-binding_ or _row-binding_ with __cbind()__ and __rbind()__
+
+```{R Vector_r}
+x <- 1:3
+y <- 10:12
+cbind(x, y)
+rbind(x, y)
+```
+
+## List
+Las listas son un tipo especial de vector que contienen elementos de diferentes clases. Las listas son un tipo de dato importante en R.
+```{R Vector_r}
+x <- list(1, "a", TRUE, 1 + 4i)
+x
+x[2]
+```
+
+
+
+xx
