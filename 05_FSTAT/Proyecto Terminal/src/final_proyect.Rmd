@@ -15,11 +15,11 @@ Los nombres y números de seguridad social de los pacientes se eliminaron recien
 
 Un archivo ha sido "procesado", aquel que contiene la base de datos de Cleveland. Los cuatro archivos sin procesar también existen en este directorio.
 
-```{r summary}
+```{r description}
 setwd("/home/ospcx/MyProyects/MCPI/MCPI_Homework/05_FSTAT/Proyecto Terminal/src/")
 data <- read.csv(file = "../data/heart.csv", header = TRUE, sep = ",", stringsAsFactors=FALSE)
 heart_data <- data.frame(data)
-summary(heart_data)
+str(data)
 ```
 
 ## Descripción de los Parámetros
@@ -39,18 +39,20 @@ summary(heart_data)
 - **(thal):** 3 = normal; 6 = defecto fijo; 7 = defecto reversible
 - **Objetivo(target):** 1 o 0.
 
-## 1. Planteamiento del Problema
-
-## 2. 
-
-
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r summary}
+summary(data)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## 1. Planteamiento del Problema
+
+## 2. Modelo Estadístico 
+
+## 3. Obtención de la Información
+
+## 4. Depuración de Datos
+
+## 5. Estimación de los Parámetros
+
+## 6. Contraste de Simplificación
+
+## 7. Crítica y Diagnósis del Modelo
