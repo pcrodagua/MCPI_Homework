@@ -1,0 +1,56 @@
+---
+title: "Proyecto Terminal"
+author: "Pablo César Rodríguez Aguayo"
+date: "February 15, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Heart Disease UCI (Enfermedades del Corazón UCI)
+Esta base de datos contiene 76 atributos, pero todos los experimentos publicados se refieren al uso de un subconjunto de 14 de ellos. En particular, la base de datos de Cleveland es la única que ha sido utilizada por los investigadores de ML hasta la fecha. El campo "objetivo" se refiere a la presencia de una enfermedad cardíaca en el paciente. Es un valor entero de 0 (sin presencia) a 4. Los experimentos con la base de datos de Cleveland se han concentrado en simplemente intentar distinguir la presencia (valores 1,2,3,4) de la ausencia (valor 0).
+
+Los nombres y números de seguridad social de los pacientes se eliminaron recientemente de la base de datos y se reemplazaron con valores ficticios.
+
+Un archivo ha sido "procesado", aquel que contiene la base de datos de Cleveland. Los cuatro archivos sin procesar también existen en este directorio.
+
+```{r summary}
+setwd("/home/ospcx/MyProyects/MCPI/MCPI_Homework/05_FSTAT/Proyecto Terminal/src/")
+data <- read.csv(file = "../data/heart.csv", header = TRUE, sep = ",", stringsAsFactors=FALSE)
+heart_data <- data.frame(data)
+summary(heart_data)
+```
+
+## Descripción de los Parámetros
+
+- **Edad(age):** Edad en años.
+- **Sexo(sex):** Sexo como variable dicotómica (1 = masculino, 0 = femenino)
+- **Dolor Pectoral (cp):** Tipo de dolor en el pecho.
+- **Presión Sanguínea (trestbps):** Presión arterial en reposo (en mm Hg al ingreso en el hospital)
+- **Colesterol(chol):** Colesterol sérico en mg / dl
+- **Glucemia en Ayunas(fbs):** Azúcar en la sangre en ayunas > 120mg/dl (1 = verdadero; 0 = falso)
+- **Resultados electrocardiográficos en reposo(restecg):** Resultados electrocardiográficos en reposo. 
+- **Ritmo Cardíaco Máximo Alcanzado(thalach):** Ritmo Cardíaco Máximo Alcanzado
+- **Angina Inducida por el Ejercicio(exang):**  Angina Inducida por el Ejercicio
+- **Depresión Inducida por Ejercicio(oldpeak):** Depresión ST inducida por el ejercicio en relación con el descanso.
+- **Segmento ST(slope):** La pendiente del segmento pico del ejercicio ST.
+- **Número de Venas(ca):** Número de vasos principales (0-3) coloreados por fluoroscopia
+- **(thal):** 3 = normal; 6 = defecto fijo; 7 = defecto reversible
+- **Objetivo(target):** 1 o 0.
+
+## 1. Planteamiento del Problema
+
+## 2. 
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
