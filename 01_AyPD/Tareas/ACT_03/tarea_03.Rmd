@@ -1,0 +1,150 @@
+---
+title: "Tarea Momento Estadístico"
+author: "Pablo César Rodríguez Aguayo"
+date: "February 24, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Primer momento
+Primer momento alrededor del cero es la media o valor esperado de la variable aleatoria y se denota por $\mu$.  La media de una variable aleatoria se considera como una cantidad numérica alrededor de la cual los valores de la variable aleatoria tienden a agruparse. Por lo tanto, la media es una medida de tendencia central. Para el cálculo de la media se utiliza:
+
+$$\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$$
+```{r media}
+calculate_mean <- function(numbers) {
+	return (sum(numbers)/length(numbers))
+}
+```
+
+Igualmente, en este punto será calculada la mediana para futuras referencias, si $n$ es par entonces se calcula mediante:
+$$\tilde{x} = x_{(n + 1)/2}$$
+Por otro lado si $n$ es impar se calcula:
+$$\tilde{x} = x_{(n + 1)/2} +  x_{n/2}$$
+```{r mediana}
+calculate_median <- function(numbers) {
+	numbers_ <- sort(numbers)
+	n <- length(numbers_)
+	if ((n %% 2) == 0) {
+		num <- numbers_[n/2] + numbers_[(n/2) + 1]
+		return(0.5*num)
+	} else {
+		return(numbers_[length(numbers_)/2])
+	}
+}
+```
+
+
+
+
+
+## Segundo momento
+El segundo momento central,alrededor de la media, recibe el nombre de varianza de la variable aleatoria. La varianza de una variable aleatoria es una medida de la dispersión de la distribución de probabilidad de esta. La varianza puede representarse mediante la siguiente fórmula:
+
+$$s^{2}=\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2$$
+
+
+```{r varianza}
+calculate_var <- function(numbers, sample=TRUE) {
+	mean_val <- calculate_mean(numbers)
+	variance_ <- 0.0
+	for (x_i in numbers) {
+		variance_ = (variance_ + (x_i - mean_val)^2)
+	}
+	if (sample) {
+		return(variance_/(length(numbers) - 1))
+	} else {
+		return (variance_/length(numbers))
+	}
+}
+```
+Y a su vez, se puede calcular la desviación estándar mediante:
+$$s=\sqrt{\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2}$$
+O bien:
+$$s=\sqrt{s^2}$$
+```{r stdev}
+calculate_stdev <- function(numbers, sample=TRUE) {
+	if (sample) {
+		return(sqrt(calculate_var(numbers)))
+	} else {
+		return(sqrt(calculate_var(numbers)))
+	}
+}
+```
+
+## Tercer momento
+El tercer momento central está relacionado con la asimetría de la distribución de probabilidad de X. La cual es llamada sesgo. El cálculo del sesgo está dado por la siguiente ecuación:
+$$a_s = \frac{3(\bar{x} - \tilde{x})}{s}$$
+
+```{r sesgo}
+calculate_sesgo <- function(numbers) {
+	upper_part <- 3*(calculate_mean(numbers) - calculate_median(numbers))
+	return (upper_part/calculate_stdev(numbers))
+}
+```
+
+## Cuarto momento
+El cuarto momento central es una medida de qué tan puntiaguda es la distribución de probabilidad y recibe el nombre de curtosis. Esta se puede calcular de la siguiente manera:
+$$k_{s}=\frac{1}{s^4}[\frac{1}{n}\sum_{i=1}^n(x_i-\bar{x})^4]$$
+
+```{r kurtosis}
+calculate_kurtosis <- function(numbers) {
+	mean_val <- calculate_mean(numbers)
+	upper_part <- 0.0
+	for (x_i in numbers) {
+		upper_part <- (upper_part + (x_i - mean_val)^4)
+	}
+	bottom_part <- (calculate_stdev(numbers)^4)*(length(numbers))
+	return(upper_part/bottom_part)
+}
+```
+
+Los momentos estandarizados tercero y cuarto, también se conocen como los factores de forma primero y segundo, respectivamente, de la distribución de probabilidad debido a que, en gran medida, determinan la forma de la distribución de probabilidad.
+
+## Resultados
+```{r resultados}
+library(moments)
+library(gridExtra)
+library(grid)
+
+car_file = read.csv(file = "clean_auto.csv")
+data_df <- data.frame(car_file)
+my_test_vector <- data_df$mpg
+my_results <- c(
+	calculate_median(my_test_vector),
+	calculate_mean(my_test_vector),
+	calculate_var(my_test_vector),
+	calculate_stdev(my_test_vector),
+	calculate_sesgo(my_test_vector),
+	calculate_kurtosis(my_test_vector)
+)
+r_results <- c(
+	median(my_test_vector),
+	mean(my_test_vector),
+	var(my_test_vector),
+	sd(my_test_vector),
+	skewness(my_test_vector),
+	kurtosis(my_test_vector)
+)
+mat_results <- data.frame(my_results, r_results)
+colnames(mat_results) <- c("Versión Propia", "Versión de R")
+rownames(mat_results) <- c("Mediana", "Media", "Varianza", "Desviacion Estandar", "Sesgo", "Curtosis")
+grid.table(mat_results)
+```
+
+Gráfica de la distribución
+## Resultados
+```{r distribucion}
+library(ggplot2)
+x <- my_test_vector
+ggplot(data_df, aes(x = my_test_vector)) +
+        geom_histogram(aes(y = ..density..))
+```
+
+```{r Densidad}
+d <- density(my_test_vector) 
+plot(d)
+```
