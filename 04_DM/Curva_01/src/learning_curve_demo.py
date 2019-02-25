@@ -163,3 +163,30 @@ estimator = SVC(gamma=0.001)
 plot_learning_curve(regr, title, diabetes_X_train, diabetes_X_test, (0.7, 1.01), cv=cv, n_jobs=4)
 
 plt.show()
+
+
+'''
+1   housing_median_age  total_rooms total_bedrooms  population  households  median_income   median_house_value
+
+- 01 - instant: record index
+- 02 -dteday : date
+- 03 -season : season (1:springer, 2:summer, 3:fall, 4:winter)
+- 04 -yr : year (0: 2011, 1:2012)
+- 05 -mnth : month ( 1 to 12)
+- 06 -hr : hour (0 to 23)
+- 07 -holiday : weather day is holiday or not (extracted from http://dchr.dc.gov/page/holiday-schedule)
+- 08 -weekday : day of the week
+- 09 -workingday : if day is neither weekend nor holiday is 1, otherwise is 0.
+- 10 weathersit : 
+    - 1: Clear, Few clouds, Partly cloudy, Partly cloudy
+    - 2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist
+    - 3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds
+    - 4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog
+- 11 temp : Normalized temperature in Celsius. The values are divided to 41 (max)
+- 12 atemp: Normalized feeling temperature in Celsius. The values are divided to 50 (max)
+- 13 hum: Normalized humidity. The values are divided to 100 (max)
+- 14 windspeed: Normalized wind speed. The values are divided to 67 (max)
+- 15 casual: count of casual users
+- 16 registered: count of registered users
+- 17 cnt: count of total rental bikes including both casual and registered
+'''

@@ -6,14 +6,13 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(ggplot2)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # Heart Disease UCI (Enfermedades del Corazón UCI)
 Esta base de datos contiene 76 atributos, pero todos los experimentos publicados se refieren al uso de un subconjunto de 14 de ellos. En particular, la base de datos de Cleveland es la única que ha sido utilizada por los investigadores de ML hasta la fecha. El campo "objetivo" se refiere a la presencia de una enfermedad cardíaca en el paciente. Es un valor entero de 0 (sin presencia) a 4. Los experimentos con la base de datos de Cleveland se han concentrado en simplemente intentar distinguir la presencia (valores 1,2,3,4) de la ausencia (valor 0).
 
 Los nombres y números de seguridad social de los pacientes se eliminaron recientemente de la base de datos y se reemplazaron con valores ficticios.
-
-Un archivo ha sido "procesado", aquel que contiene la base de datos de Cleveland. Los cuatro archivos sin procesar también existen en este directorio.
 
 ```{r description}
 setwd("/home/ospcx/MyProyects/MCPI/MCPI_Homework/05_FSTAT/Proyecto Terminal/src/")
@@ -24,35 +23,31 @@ str(data)
 
 ## Descripción de los Parámetros
 
-- **Edad(age):** Edad en años.
-- **Sexo(sex):** Sexo como variable dicotómica (1 = masculino, 0 = femenino)
-- **Dolor Pectoral (cp):** Tipo de dolor en el pecho.
-- **Presión Sanguínea (trestbps):** Presión arterial en reposo (en mm Hg al ingreso en el hospital)
-- **Colesterol(chol):** Colesterol sérico en mg / dl
-- **Glucemia en Ayunas(fbs):** Azúcar en la sangre en ayunas > 120mg/dl (1 = verdadero; 0 = falso)
-- **Resultados electrocardiográficos en reposo(restecg):** Resultados electrocardiográficos en reposo. 
-- **Ritmo Cardíaco Máximo Alcanzado(thalach):** Ritmo Cardíaco Máximo Alcanzado
-- **Angina Inducida por el Ejercicio(exang):**  Angina Inducida por el Ejercicio
-- **Depresión Inducida por Ejercicio(oldpeak):** Depresión ST inducida por el ejercicio en relación con el descanso.
-- **Segmento ST(slope):** La pendiente del segmento pico del ejercicio ST.
-- **Número de Venas(ca):** Número de vasos principales (0-3) coloreados por fluoroscopia
-- **(thal):** 3 = normal; 6 = defecto fijo; 7 = defecto reversible
-- **Objetivo(target):** 1 o 0.
+- **age:** Edad en años.
+- **sex:** Sexo como variable dicotómica (1 = masculino, 0 = femenino)
+- **cp:** Tipo de dolor en el pecho.
+- **trestbps:** Presión arterial en reposo (en mm Hg al ingreso en el hospital)
+- **chol:** Colesterol sérico en mg / dl
+- **fbs:** Azúcar en la sangre en ayunas > 120mg/dl (1 = verdadero; 0 = falso)
+- **restecg:** Resultados electrocardiográficos en reposo. 
+- **thalach:** Ritmo Cardíaco Máximo Alcanzado
+- **exang:**  Angina Inducida por el Ejercicio
+- **oldpeak:** Depresión ST inducida por el ejercicio en relación con el descanso.
+- **slope:** La pendiente del segmento pico del ejercicio ST.
+- **ca:** Número de vasos principales (0-3) coloreados por fluoroscopia
+- **thal:** 3 = normal; 6 = defecto fijo; 7 = defecto reversible
+- **target:** 1 o 0.
 
 ```{r summary}
 summary(data)
 ```
+# Age
+```{r description_2}
+ggplot(heart_data, aes(x = target, y = age)) +
+  geom_boxplot(na.rm = TRUE) +
+  ylim(20, 100)+
+  ggtitle("Age vs Disease")
+```
 
-## 1. Planteamiento del Problema
 
-## 2. Modelo Estadístico 
 
-## 3. Obtención de la Información
-
-## 4. Depuración de Datos
-
-## 5. Estimación de los Parámetros
-
-## 6. Contraste de Simplificación
-
-## 7. Crítica y Diagnósis del Modelo
