@@ -6,8 +6,13 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-library(ggplot2)
 knitr::opts_chunk$set(echo = TRUE)
+#Visualization
+library(DataExplorer)
+#Table things
+library(data.table)
+library(dplyr)
+library(psych)
 ```
 # Heart Disease UCI (Enfermedades del Corazón UCI)
 Esta base de datos contiene 76 atributos, pero todos los experimentos publicados se refieren al uso de un subconjunto de 14 de ellos. En particular, la base de datos de Cleveland es la única que ha sido utilizada por los investigadores de ML hasta la fecha. El campo "objetivo" se refiere a la presencia de una enfermedad cardíaca en el paciente. Es un valor entero de 0 (sin presencia) a 4. Los experimentos con la base de datos de Cleveland se han concentrado en simplemente intentar distinguir la presencia (valores 1,2,3,4) de la ausencia (valor 0).
@@ -38,16 +43,141 @@ str(data)
 - **thal:** 3 = normal; 6 = defecto fijo; 7 = defecto reversible
 - **target:** 1 o 0.
 
-```{r summary}
-summary(data)
+A continuación se realizará un análisis de las características de edad, colesterol y ritmo cardíaco obteniendo el promedio y mediana.
+
+### Edad
+```{r des_edad}
+women_age <- subset(heart_data, sex == 0)[c(1)]
+men_age <- subset(heart_data, sex == 1)[c(1)]
+
+# ----
+general_data <- c(
+	min(heart_data$age),
+	max(heart_data$age),
+	mean(heart_data$age),
+	median(heart_data$age)
+)
+men_data <- c(
+	min(men_age$age),
+	max(men_age$age),
+	mean(men_age$age),
+	median(men_age$age)
+)
+women_data <- c(
+	min(women_age$age),
+	max(women_age$age),
+	mean(women_age$age),
+	median(women_age$age)
+)
+library(gridExtra)
+library(grid)
+mat_results <- data.frame(general_data, women_data, men_data)
+colnames(mat_results) <- c("General", "Mujeres", "Hombres")
+rownames(mat_results) <- c("Min", "Max", "Promedio", "Media")
+grid.table(mat_results)
 ```
-# Age
-```{r description_2}
-ggplot(heart_data, aes(x = target, y = age)) +
-  geom_boxplot(na.rm = TRUE) +
-  ylim(20, 100)+
-  ggtitle("Age vs Disease")
+
+Ahora lo analizaremos en un diagrama de caja.
+
+```{r des_age_general}
+boxplot(heart_data$age,
+main = "Edad Pacientes",
+xlab = "Edad",
+ylab = "General",
+col = "orange",
+border = "brown",
+horizontal = TRUE,
+notch = TRUE
+)
+boxplot(women_age$age,
+main = "Edad Mujeres",
+ylab = "Mujeres",
+xlab = "Edad",
+col = "red",
+border = "gray",
+horizontal = TRUE,
+notch = TRUE
+)
+boxplot(men_age$age,
+main = "Edad Hombres",
+ylab = "Hombres",
+xlab = "Edad",
+col = "blue",
+border = "gray",
+horizontal = TRUE,
+notch = TRUE
+)
 ```
+
+### Colesterol
+
+```{r chol}
+women_chol <- subset(heart_data, sex == 0)[c(5)]
+men_chol <- subset(heart_data, sex == 1)[c(5)]
+# ----
+general_chol <- c(
+	min(heart_data$chol),
+	max(heart_data$chol),
+	mean(heart_data$chol),
+	median(heart_data$chol)
+)
+men_chol_ <- c(
+	min(men_chol$chol),
+	max(men_chol$chol),
+	mean(men_chol$chol),
+	median(men_chol$chol)
+)
+women_chol_ <- c(
+	min(women_chol$chol),
+	max(women_chol$chol),
+	mean(women_chol$chol),
+	median(women_chol$chol)
+)
+
+mat_results_chol <- data.frame(general_chol, women_chol_, men_chol_)
+colnames(mat_results_chol) <- c("General", "Mujeres", "Hombres")
+rownames(mat_results_chol) <- c("Min", "Max", "Promedio", "Media")
+grid.table(mat_results_chol)
+```
+
+
+```{r rc_chol}
+boxplot(heart_data$chol,
+main = "mg/ml de Colesterol por Pacientes",
+xlab = "Colesterol",
+ylab = "General",
+col = "orange",
+border = "brown",
+horizontal = TRUE,
+notch = TRUE
+)
+boxplot(women_chol$chol,
+main = "Colesterol en Mujeres",
+ylab = "Mujeres",
+xlab = "Colesterol",
+col = "red",
+border = "gray",
+horizontal = TRUE,
+notch = TRUE
+)
+boxplot(men_chol$chol,
+main = "Colesterol en Hombres",
+ylab = "Hombres",
+xlab = "Colesterol",
+col = "blue",
+border = "gray",
+horizontal = TRUE,
+notch = TRUE
+)
+```
+
+### Resumen General de los Datos
+De los datos siguientes, se evitarán los valores de sexo y target, ya que estos se emplean como variables categóricas.
+```{r des_table_data}
+describe(heart_data)
+
+```
+
 
 
 
