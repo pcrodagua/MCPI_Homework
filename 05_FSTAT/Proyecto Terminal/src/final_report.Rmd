@@ -102,7 +102,7 @@ El conjunto de datos está conformado por 14 características y 303 observacione
 ## Máximos, Mínimos y Valores Atípicos 
 Como se ha observado, el conjunto de datos tiene un número considerable de valores por lo que una de las metas es describir estas características y obtener una conclusión. El uso de máximos y mínimos permite el cálculo de otras medidas como el rango el cual se verá posteriormente. Además permite determinar los valores atípicos dentro del conjunto de datos, ya sean los valores atípicos menores o mayores.
 
-```{r men_women_max}
+```{r men_women_max, echo=FALSE, results='asis' }
 # --- age --- 
 women_age <- subset(heart_data, sex == 0)[c(1)]
 men_age <- subset(heart_data, sex == 1)[c(1)]
@@ -128,58 +128,180 @@ men_oldpeak <- subset(heart_data, sex == 1)[c(10)]
 ### Máximos
 Se define como el valor matemático mayor en el conjunto de datos.
 
-```{r max}
+```{r max, echo=FALSE, results='asis'}
 max_vals_men <- c(max(men_age$age), max(men_trestbps$trestbps), max(men_chol$chol), max(men_thalach$thalach), max(men_oldpeak$oldpeak))
 max_vals_women <- c(max(women_age$age), max(women_trestbps$trestbps), max(women_chol$chol), max(women_thalach$thalach), max(women_oldpeak$oldpeak))
 max_vals_general <- c(max(heart_data$age), max(heart_data$trestbps), max(heart_data$chol), max(heart_data$thalach), max(heart_data$oldpeak))
-
 
 data_gen <- cbind(max_vals_general ,max_vals_men, max_vals_women)
 df.max_val <- data.frame(data_gen)
 colnames(df.max_val) <- sex_ <- c('General', 'Hombre', 'Mujer')
 rownames(df.max_val) <- c('Edad', 'Presión Arterial', 'Colesterol', 'Ritmo Cardíaco', 'Depresión ST')
 
-
 kable(df.max_val, caption = 'Valores Máximos Obtenidos')
-
-
 ```
 
+**Comentarios: ** Cabe destacar que de lo anterior visto, la _edad_ máxima es perteneciente a los hombres por un año. En cuanto a _presión arterial_, se puede ver que el valor mayor corresponde a una mujer tomando el valor de 200, siendo el máximo en hombres menor por 8 unidades. Así mismo pasa con el _colesterol_, siendo el valor máximo encontrado en el subconjunto de las mujeres tomando el valor de 564 y en hombres de 353. Dada la naturaleza aún no estudiada del colesterol, hasta este punto pudiera ser que el colesterol máximo encontrado es un valor atípico. Respecto al _ritmo cardiaco_, se puede apreciar que es mayor en los hombres con un valor de 202, mientras que en mujeres es 10 unidades menor. Por último, se puede ver que en la depresión post-entrenamiento es ligeramente mayor en mujeres por 0.6, tomando las mujeres el valor máximo nuevamente. Hasta este punto, basandose en los aspectos analizados se puede ver que las mujeres tienen los valores máximos en tres de cinco características analizadas, siendo una de ellas un probable valor atípico.
 
 ### Mínimos
 Se define como el valor matemático menor en el conjunto de datos.
 
-```{r min}
+```{r min, echo=FALSE, results='asis'}
 min_vals_men <- c(min(men_age$age), min(men_trestbps$trestbps), min(men_chol$chol), min(men_thalach$thalach), min(men_oldpeak$oldpeak))
 min_vals_women <- c(min(women_age$age), min(women_trestbps$trestbps), min(women_chol$chol), min(women_thalach$thalach), min(women_oldpeak$oldpeak))
 min_vals_general <- c(min(heart_data$age), min(heart_data$trestbps), min(heart_data$chol), min(heart_data$thalach), min(heart_data$oldpeak))
-
 
 data_gen <- cbind(min_vals_general ,min_vals_men, min_vals_women)
 df.min_val <- data.frame(data_gen)
 colnames(df.min_val) <- sex_ <- c('General', 'Hombre', 'Mujer')
 rownames(df.min_val) <- c('Edad', 'Presión Arterial', 'Colesterol', 'Ritmo Cardíaco', 'Depresión ST')
 
-
 kable(df.min_val, caption = 'Valores Mínimos Obtenidos')
 ```
 
-### Valores Atípicos
-Se definen como los valores mucho mayores o menores que los demás valores en el conjunto de datos. O bien, se puede definir como el valor que radica por fuera del conjunto de datos establecido.
+**Comentarios: ** De acuerdo a los valores mínimos, respecto a la _edad_ podemos decir que siendo el valor mínimo perteneciente a un hombre con 29 años y el valor máximo a un hombre igualmente, se puede decir que es más ámplio el rango de edades en los varones. Para este caso, la _presión arterial_, presentó un caso con un valor mínimo de 94 tanto para hombres como para mujeres. Para el _colesterol_ se puede ver que el valor mínimo se encuentra en el subconjunto de los hombres, con un valor de 126, mientras que las mujeres poseen un valor mínimo de 141. Para el caso del _ritmo cardiaco_, la presencia en hombres es con un valor mínimo de 71, mientras que en el subconjunto de las mujeres es de 96. Por último, se puede ver que para la depresión post-entrenamiento, el valor para todos es 0, lo cual puede ser un posible valor atípico encontrado dentro del conjunto de datos.
 
+## Cuartiles, Percentiles y Rango
 
-
-
-
-## Cuartiles y Percentiles
 ### Cuartiles
-Los cuartiles son los tres valores de la variable que dividen a un conjunto de datos ordenados en cuatro partes iguales.
+En términos generales, los cuartiles dividen el conjunto de datos en cuatro partes iguales, con observaciones sobre el tercer cuartil que constituyen el cuarto superior de los datos del conjunto, siendo el segundo cuartil idéntico a la mediana, y el primer cuartil separado al cuarto más bajo de los tres cuartos superiores. Los valores comunmente esperados se encuentran entre el primer cuartil y el tercero, mientras que los valores atípicos se encuentran ya sea por encima del tercer cuartil o bien por debajo del primer cuartil.
 
 ### Percentiles
-Los percentiles son los 99 valores que dividen una serie de datos ordenados en 100 partes iguales. Los percentiles dan los valores correspondientes al 1%, al 2%... y al 99% de los datos.
+Del mismo modo, un conjunto de datos se puede dividir aún más finamente usando percentiles; el percentil 99 separa el 1% más alto del 99% inferior, y así sucesivamente. A menos que el número de observaciones sea múltiplo de 100. 
+
+**Nota** El percentil en la posición 50, el segundo cuartil, la mediana y el quinto decil son el mismo valor el cual está representado mediante la siguiente fórmula.
 $$P_{50} =  \tilde{x} = Q_2 = D_5$$
 
+
+## Valores Atípicos
+Se definen como los valores mucho mayores o menores que los demás valores en el conjunto de datos. O bien, se puede definir como el valor que radica por fuera del conjunto de datos establecido las cuales se distinguen por su distancia a los valores normales.
+
+### Regla del Pulgar
+Siendo una práctica común la _regla del pulgar_, la cual consiste en designar un valor atípico en base a la experiencia obtenida. Para esto, los valores atípicos se calculan mediante dos fórmulas. La primera permite calcular los valores atípicos mínimos, es decir los valores que están por debajo de lo esperado, para esto se emplea la siguiente fórmula: 
+
+$$V_{ai} =  Q_1 - 1.5*IQR$$
+Donde: 
+
+- $V_{ai}$ son los valores atípicos inferiores.
+- $Q_1$ es el valor del cuartil 1.
+- $IQR$ es el valor intercuartil.
+
+Mientras que para calcular los valores atípicos por encima de lo esperado, se emplea la siguiente fórmula:
+
+$$V_{as} =  Q_3 + 1.5*IQR$$
+
+Donde: 
+
+- $V_{as}$ son los valore atípicos superiores.
+- $Q_3$ es el valor del cuartil 3.
+- $IQR$ es el valor intercuartil.
+
+Si bien estas medidas no son utilizadas como la forma adecuada para calcular los valores atípicos, dentro de la industrial son ampliamente aceptadas. Sin embargo, estos métodos solo son usados si el analista de datos es considerado de grado midlevel o senior. Para este caso se utilizará el diagrama de caja para ver la distribución de los datos. 
+
+### Rango
+El rango permite conocer la diferencia entre el valor máximo y mínimo de la característica seleccionada. Esta medida es considerada como medida de dispersión y permite conocer el intervalo que se haya entre la distribución. Se calcula mediante la siguiente fórmula:
+
+$$R_{var} = max(x) - min(x)$$
+
+### Conlusiones Generales
+A continuación se realizará un análisis para las características: edad y presión arterial. Mostrando los valores mínimos, máximo, rango segundo cuartil y un breve análisis de los datos obtenidos.
+
+#### Edad
+
+```{r sum_age_women, echo=FALSE, results='asis'}
+boxplot(women_age$age,
+  main = "Edad en Mujeres",
+  xlab = "Edad",
+  ylab = "Mujeres",
+  col = "red",
+  border = "gray",
+  horizontal = TRUE,
+  notch = TRUE
+)
+```
+
+**Notas:** De acuerdo a la gráfica anterior se puede apreciar que el valor mínimo está en 34 mientras que su máximo es de 76, con un rango de 42. A su vez se puede apreciar que no hay valores atípicos y que su segundo cuartil es de 57. 
+
+
+```{r sum_age_men, echo=FALSE, results='asis'}
+boxplot(men_age$age,
+  main = "Edad en Hombres",
+  xlab = "Edad",
+  ylab = "Hombres",
+  col = "blue",
+  border = "gray",
+  horizontal = TRUE,
+  notch = TRUE
+)
+```
+
+**Notas:** Para el conjunto de los hombres se puede apreciar un valor mínimo de 29 y un máximo de 77, donde su rango es de 48. A su vez se puede apreciar que no hay valores atípicos y que su segundo cuartil es de 54, esto debido al mayor rango de los datos. 
+
+
+```{r sum_age_pac, echo=FALSE, results='asis'}
+boxplot(heart_data$age,
+  main = "Edad en Pacientes",
+  xlab = "Edad",
+  ylab = "General",
+  col = "orange",
+  border = "brown",
+  horizontal = TRUE,
+  notch = TRUE
+)
+```
+
+**Notas:** Para el conjunto general se puede apreciar un valor mínimo de 29 y un máximo de 77, donde su rango es de 42. A su vez se puede apreciar que no hay valores atípicos y que su segundo cuartil es de 55, debido a la suma de ambos conjuntos y. 
+
+
+#### Presión Arterial
+```{r sum_trestbps_women, echo=FALSE, results='asis'}
+# --- trestbps --- 
+boxplot(women_trestbps$trestbps,
+  main = "Presión Arterial en Mujeres",
+  xlab = "Presión Arterial",
+  ylab = "Mujeres",
+  col = "red",
+  border = "gray",
+  horizontal = TRUE,
+  notch = TRUE
+)
+```
+
+**Notas:** En el subconjunto de las mujeres se puede apreciar un valor mínimo de 94 y un máximo de 200, donde su rango es de 106. Presentando valores atípicos despues del tercer quartil y con segundo cuartil de 131 indicando la mitad de los datos. 
+
+```{r sum_trestbps_men, echo=FALSE, results='asis'}
+# --- trestbps --- 
+boxplot(men_trestbps$trestbps,
+  main = "Presión Arterial en Hombres",
+  xlab = "Presión Arterial",
+  ylab = "Hombres",
+  col = "blue",
+  border = "gray",
+  horizontal = TRUE,
+  notch = TRUE
+)
+```
+
+**Notas:** En el subconjunto de los hombres se puede apreciar un valor mínimo de 94 y un máximo de 192 siendo que menor el rango que el de las mujeres por 8, donde su rango es de 98. Presentando valores atípicos despues del tercer quartil y un segundo cuartil de 131 indicando la mitad de los datos. 
+
+```{r sum_trestbps_pac, echo=FALSE, results='asis'}
+# --- trestbps --- 
+boxplot(heart_data$trestbps,
+  main = "Presión Arterial en Pacientes",
+  xlab = "Presión Arterial",
+  ylab = "General",
+  col = "orange",
+  border = "brown",
+  horizontal = TRUE,
+  notch = TRUE
+)
+```
+
+**Notas:** Por último, en el conjunto general se puede ver un valor mínimo de 94 y un máximo de 200 con un rango de 106. Presentando valores atípicos después del tercer cuartil y un segundo cuartil de 130. 
+
+
 ## Medidas de Tendencia Central
+Las medidas de tendencia central permiten obtener indicadores preeliminares que brindan una interpretación numérica de las medidas obtenidas.
 
 ### Media
 Primer momento alrededor del cero es la media o valor esperado de la variable aleatoria y se denota por $\mu$. La media de una variable aleatoria se considera como una cantidad numérica alrededor de la cual los valores de la variable aleatoria tienden a agruparse. Por lo tanto, la media es una medida de tendencia central. Para el cálculo de la media se utiliza:
@@ -196,17 +318,99 @@ Por otro lado si $n$ es impar se calcula:
 
 $$\tilde{x} = x_{(n + 1)/2} +  x_{n/2}$$
 
+### Conclusiones Generales
+Para concluir las medidas de tendencia central se mostrará un histograma de frecuencias el cual contendrá un diagrama de densidad, que nos permite ver la inclinación de la curva, el promedio o media de los datos, la mediana y la desviación estándar como medida de referencia.
+
+#### Colesterol
+
+```{r mean_chol_women, echo=FALSE, results='asis'}
+# --- trestbps --- 
+hist(women_chol$chol, # histogram
+col = "gray", # column color
+border = "black", 
+prob = TRUE, # show densities instead of frequencies
+xlab = "Colesterol",
+main = "Colesterol en Mujeres")
 
 
-### Moda
-Se refiere al valor que ocurre con más frecuencia.
+abline(v = mean(women_chol$chol),
+ col = "royalblue",
+ lwd = 2)
+
+
+abline(v = median(women_chol$chol),
+ col = "red",
+ lwd = 2)
+
+legend(x = "topright", # location of legend within plot area
+ c("Promedio", "Mediana"),
+ col = c("royalblue", "red"),
+ lwd = c(2, 2, 2))
+```
+
+```{r mean_chol_men, echo=FALSE, results='asis'}
+# --- trestbps --- 
+hist(men_chol$chol, # histogram
+col = "gray", # column color
+border = "black", 
+prob = TRUE, # show densities instead of frequencies
+xlab = "Colesterol",
+main = "Colesterol en Hombres")
+
+
+abline(v = mean(men_chol$chol),
+ col = "royalblue",
+ lwd = 2)
+
+
+abline(v = median(men_chol$chol),
+ col = "red",
+ lwd = 2)
+
+
+legend(x = "topright", # location of legend within plot area
+ c("Promedio", "Mediana"),
+ col = c("royalblue", "red"),
+ lwd = c(2, 2, 2))
+```
+
+
+```{r mean_chol_pac, echo=FALSE, results='asis'}
+# --- trestbps --- 
+hist(heart_data$chol, # histogram
+col = "gray", # column color
+border = "black", 
+prob = TRUE, # show densities instead of frequencies
+xlab = "Colesterol",
+main = "Colesterol en Pacientes")
+
+
+
+abline(v = mean(heart_data$chol),
+ col = "royalblue",
+ lwd = 2)
+
+
+abline(v = median(heart_data$chol),
+ col = "red",
+ lwd = 2)
+
+
+legend(x = "topright", # location of legend within plot area
+ c("Promedio", "Mediana"),
+ col = c("royalblue", "red"),
+ lwd = c(2, 2, 2))
+```
+
+
+
+
+
 
 
 ## Medidas de Dispersión
 
-### Rango
 ### Desviación Media
-
 
 
 ### Varianza
@@ -222,4 +426,117 @@ O bien:
 $$s=\sqrt{s^2}$$
 
 ### Coeficiente de Variación
+
+### Conclusiones Generales
+
+#### Ritmo Cardiáco Máximo Alcanzado
+```{r mean_thalach_women, echo=FALSE, results='asis'}
+# --- trestbps --- 
+hist(women_thalach$thalach, # histogram
+col = "gray", # column color
+border = "black", 
+prob = TRUE, # show densities instead of frequencies
+xlab = "Ritmo Cardiaco Máximo Alcanzado",
+main = "Ritmo Cardiaco Máximo Alcanzado en Mujeres")
+
+lines(density(women_thalach$thalach), # density plot
+lwd = 2, # thickness of line
+col = "orange")
+
+abline(v = mean(women_thalach$thalach),
+ col = "royalblue",
+ lwd = 2)
+
+
+abline(v = median(women_thalach$thalach),
+ col = "red",
+ lwd = 2)
+
+abline(v = mean(women_thalach$thalach) + sd(women_thalach$thalach),
+ col = "cyan",
+ lwd = 2)
+
+abline(v = mean(women_thalach$thalach) - sd(women_thalach$thalach),
+ col = "cyan",
+ lwd = 2)
+
+legend(x = "topleft", # location of legend within plot area
+ c("Diagrama de Densidad", "Promedio", "Mediana", "Desviación Estándar"),
+ col = c("orange", "royalblue", "red", "cyan"),
+ lwd = c(2, 2, 2))
+```
+
+
+```{r mean_thalach_men, echo=FALSE, results='asis'}
+# --- trestbps --- 
+hist(men_thalach$thalach, # histogram
+col = "gray", # column color
+border = "black", 
+prob = TRUE, # show densities instead of frequencies
+xlab = "Ritmo Cardiaco Máximo Alcanzado",
+main = "Ritmo Cardiaco Máximo Alcanzado en Hombres")
+
+lines(density(men_thalach$thalach), # density plot
+lwd = 2, # thickness of line
+col = "orange")
+
+abline(v = mean(men_thalach$thalach),
+ col = "royalblue",
+ lwd = 2)
+
+
+abline(v = median(men_thalach$thalach),
+ col = "red",
+ lwd = 2)
+
+abline(v = mean(men_thalach$thalach) + sd(men_thalach$thalach),
+ col = "cyan",
+ lwd = 2)
+
+abline(v = mean(men_thalach$thalach) - sd(men_thalach$thalach),
+ col = "cyan",
+ lwd = 2)
+
+legend(x = "topleft", # location of legend within plot area
+ c("Diagrama de Densidad", "Promedio", "Mediana", "Desviación Estándar"),
+ col = c("orange", "royalblue", "red", "cyan"),
+ lwd = c(2, 2, 2))
+```
+
+
+```{r mean_thalach_pac, echo=FALSE, results='asis'}
+# --- trestbps --- 
+hist(heart_data$thalach, # histogram
+col = "gray", # column color
+border = "black", 
+prob = TRUE, # show densities instead of frequencies
+xlab = "Ritmo Cardiaco Máximo Alcanzado",
+main = "Ritmo Cardiaco Máximo Alcanzado en Pacientes")
+
+lines(density(heart_data$thalach), # density plot
+lwd = 2, # thickness of line
+col = "orange")
+
+abline(v = mean(heart_data$thalach),
+ col = "royalblue",
+ lwd = 2)
+
+
+abline(v = median(heart_data$thalach),
+ col = "red",
+ lwd = 2)
+
+abline(v = mean(heart_data$thalach) + sd(heart_data$thalach),
+ col = "cyan",
+ lwd = 2)
+
+abline(v = mean(heart_data$thalach) - sd(heart_data$thalach),
+ col = "cyan",
+ lwd = 2)
+
+legend(x = "topleft", # location of legend within plot area
+ c("Diagrama de Densidad", "Promedio", "Mediana", "Desviación Estándar"),
+ col = c("orange", "royalblue", "red", "cyan"),
+ lwd = c(2, 2, 2))
+```
 
