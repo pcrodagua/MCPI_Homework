@@ -169,7 +169,7 @@ En términos generales, los cuartiles dividen el conjunto de datos en cuatro par
 ### Percentiles
 Del mismo modo, un conjunto de datos se puede dividir aún más finamente usando percentiles; el percentil 99 separa el 1% más alto del 99% inferior, y así sucesivamente. A menos que el número de observaciones sea múltiplo de 100. 
 
-**Nota** El percentil en la posición 50, el segundo cuartil, la mediana y el quinto decil son el mismo valor el cual está representado mediante la siguiente fórmula.
+**Nota:** El percentil en la posición 50, el segundo cuartil, la mediana y el quinto decil son el mismo valor el cual está representado mediante la siguiente fórmula.
 $$P_{50} =  \tilde{x} = Q_2 = D_5$$
 
 
@@ -220,7 +220,7 @@ boxplot(women_age$age,
 )
 ```
 
-**Notas:** De acuerdo a la gráfica anterior se puede apreciar que el valor mínimo está en 34 mientras que su máximo es de 76, con un rango de 42. A su vez se puede apreciar que no hay valores atípicos y que su segundo cuartil es de 57. 
+**Comentarios:** De acuerdo a la gráfica anterior se puede apreciar que el valor mínimo está en 34 mientras que su máximo es de 76, con un rango de 42. A su vez se puede apreciar que no hay valores atípicos y que su segundo cuartil es de 57. 
 
 
 ```{r sum_age_men, echo=FALSE, results='asis'}
@@ -235,7 +235,7 @@ boxplot(men_age$age,
 )
 ```
 
-**Notas:** Para el conjunto de los hombres se puede apreciar un valor mínimo de 29 y un máximo de 77, donde su rango es de 48. A su vez se puede apreciar que no hay valores atípicos y que su segundo cuartil es de 54, esto debido al mayor rango de los datos. 
+**Comentarios:** Para el conjunto de los hombres se puede apreciar un valor mínimo de 29 y un máximo de 77, donde su rango es de 48. A su vez se puede apreciar que no hay valores atípicos y que su segundo cuartil es de 54, esto debido al mayor rango de los datos. 
 
 
 ```{r sum_age_pac, echo=FALSE, results='asis'}
@@ -250,7 +250,7 @@ boxplot(heart_data$age,
 )
 ```
 
-**Notas:** Para el conjunto general se puede apreciar un valor mínimo de 29 y un máximo de 77, donde su rango es de 42. A su vez se puede apreciar que no hay valores atípicos y que su segundo cuartil es de 55, debido a la suma de ambos conjuntos y. 
+**Comentarios:** Para el conjunto general se puede apreciar un valor mínimo de 29 y un máximo de 77, donde su rango es de 42. A su vez se puede apreciar que no hay valores atípicos y que su segundo cuartil es de 55, debido a la suma de ambos conjuntos y. 
 
 
 #### Presión Arterial
@@ -267,7 +267,7 @@ boxplot(women_trestbps$trestbps,
 )
 ```
 
-**Notas:** En el subconjunto de las mujeres se puede apreciar un valor mínimo de 94 y un máximo de 200, donde su rango es de 106. Presentando valores atípicos despues del tercer quartil y con segundo cuartil de 131 indicando la mitad de los datos. 
+**Comentarios:** En el subconjunto de las mujeres se puede apreciar un valor mínimo de 94 y un máximo de 200, donde su rango es de 106. Presentando valores atípicos despues del tercer quartil y con segundo cuartil de 131 indicando la mitad de los datos. 
 
 ```{r sum_trestbps_men, echo=FALSE, results='asis'}
 # --- trestbps --- 
@@ -282,7 +282,7 @@ boxplot(men_trestbps$trestbps,
 )
 ```
 
-**Notas:** En el subconjunto de los hombres se puede apreciar un valor mínimo de 94 y un máximo de 192 siendo que menor el rango que el de las mujeres por 8, donde su rango es de 98. Presentando valores atípicos despues del tercer quartil y un segundo cuartil de 131 indicando la mitad de los datos. 
+**Comentarios:** En el subconjunto de los hombres se puede apreciar un valor mínimo de 94 y un máximo de 192 siendo que menor el rango que el de las mujeres por 8, donde su rango es de 98. Presentando valores atípicos despues del tercer quartil y un segundo cuartil de 131 indicando la mitad de los datos. 
 
 ```{r sum_trestbps_pac, echo=FALSE, results='asis'}
 # --- trestbps --- 
@@ -297,7 +297,7 @@ boxplot(heart_data$trestbps,
 )
 ```
 
-**Notas:** Por último, en el conjunto general se puede ver un valor mínimo de 94 y un máximo de 200 con un rango de 106. Presentando valores atípicos después del tercer cuartil y un segundo cuartil de 130. 
+**Comentarios:** Por último, en el conjunto general se puede ver un valor mínimo de 94 y un máximo de 200 con un rango de 106. Presentando valores atípicos después del tercer cuartil y un segundo cuartil de 130. 
 
 
 ## Medidas de Tendencia Central
@@ -348,6 +348,8 @@ legend(x = "topright", # location of legend within plot area
  lwd = c(2, 2, 2))
 ```
 
+**Comentarios:**
+
 ```{r mean_chol_men, echo=FALSE, results='asis'}
 # --- trestbps --- 
 hist(men_chol$chol, # histogram
@@ -374,6 +376,7 @@ legend(x = "topright", # location of legend within plot area
  lwd = c(2, 2, 2))
 ```
 
+**Comentarios:**
 
 ```{r mean_chol_pac, echo=FALSE, results='asis'}
 # --- trestbps --- 
@@ -402,7 +405,7 @@ legend(x = "topright", # location of legend within plot area
  lwd = c(2, 2, 2))
 ```
 
-
+**Comentarios:**
 
 
 
@@ -466,6 +469,7 @@ legend(x = "topleft", # location of legend within plot area
  lwd = c(2, 2, 2))
 ```
 
+**Comentarios:**
 
 ```{r mean_thalach_men, echo=FALSE, results='asis'}
 # --- trestbps --- 
@@ -503,6 +507,7 @@ legend(x = "topleft", # location of legend within plot area
  lwd = c(2, 2, 2))
 ```
 
+**Comentarios:**
 
 ```{r mean_thalach_pac, echo=FALSE, results='asis'}
 # --- trestbps --- 
@@ -540,3 +545,46 @@ legend(x = "topleft", # location of legend within plot area
  lwd = c(2, 2, 2))
 ```
 
+**Comentarios:**
+
+
+## Curtosis y Sesgo
+
+### Curtosis
+Las curtosis permite examinar la proporción de la varianza que se explica por la combinación de datos extremos respecto a la media en contraposición con datos poco alejados de la misma.  Una mayor curtosis implica una mayor concentración de datos cerca de la media de la distribución elevando la frecuencia de datos muy alejados de la misma.
+
+$$\alpha = \frac{\sum{(x_i - \bar{x}})^{4}}{ns^4}$$
+A continuación se analizará la curtosis de los pacientes con el _ritmmo cardiaco máximo_ y sus subconjuntos de hombres y mujeres.
+
+```{r curtosis, echo=FALSE, results='asis'}
+library(moments)
+kurt_pac_thalach <- kurtosis(heart_data$thalach)
+kurt_men_thalach <- kurtosis(men_thalach$thalach)
+kurt_wom_thalach <- kurtosis(women_thalach$thalach)
+
+data_kurt <- cbind(kurt_pac_thalach, kurt_men_thalach, kurt_wom_thalach)
+df.kurt_val <- data.frame(data_kurt)
+colnames(df.kurt_val) <- sex_ <- c('General', 'Hombre', 'Mujer')
+rownames(df.kurt_val) <- c('Curtosis')
+
+kable(df.kurt_val, caption = 'Curtosis del Ritmo Máximo Cardiaco Alcanzado')
+```
+
+
+### Sesgo
+Esta forma de distribución permite identificar la manera como los datos tienden a reunirse de acuerdo con la frecuencia con que se hallen dentro de la distribución. Las medidas de asimetría son indicadores que permiten establecer el grado de simetría que presentan una distribución de probabilidad de una variable aleatoria sin tener que hacer su representación gráfica.
+
+$$A_s = \frac{3(\bar{x} - \tilde{x})}{s}$$
+
+```{r sesgo, echo=FALSE, results='asis'}
+skew_pac_thalach <- skewness(heart_data$thalach)
+skew_men_thalach <- skewness(men_thalach$thalach)
+skew_wom_thalach <- skewness(women_thalach$thalach)
+
+data_skew <- cbind(skew_pac_thalach, skew_men_thalach, skew_wom_thalach)
+df.skew_val <- data.frame(data_skew)
+colnames(df.skew_val) <- sex_ <- c('General', 'Hombre', 'Mujer')
+rownames(df.skew_val) <- c('Sesgo')
+
+kable(df.skew_val, caption = 'Sesgo del Ritmo Máximo Cardiaco Alcanzado')
+```
