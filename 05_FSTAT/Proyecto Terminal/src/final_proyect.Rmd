@@ -31,9 +31,9 @@ str(data)
 - **age:** Edad en años.
 - **sex:** Sexo como variable dicotómica (1 = masculino, 0 = femenino)
 - **cp:** Tipo de dolor en el pecho.
-- **trestbps:** Presión arterial en reposo (en mm Hg al ingreso en el hospital)
-- **chol:** Colesterol sérico en mg / dl
-- **fbs:** Azúcar en la sangre en ayunas > 120mg/dl (1 = verdadero; 0 = falso)
+- **trestbps:** Presión arterial en reposo (en mmHg al ingresar en el hospital)
+- **chol:** Colesterol sérico en mg/dl
+- **fbs:** Azúcar en la sangre en ayunas >120mg/dl (1 = verdadero, 0 = falso)
 - **restecg:** Resultados electrocardiográficos en reposo. 
 - **thalach:** Ritmo Cardíaco Máximo Alcanzado
 - **exang:**  Angina Inducida por el Ejercicio
@@ -175,7 +175,6 @@ notch = TRUE
 De los datos siguientes, se evitarán los valores de sexo y target, ya que estos se emplean como variables categóricas.
 ```{r des_table_data}
 describe(heart_data)
-
 ```
 
 
