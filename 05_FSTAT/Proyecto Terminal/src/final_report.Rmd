@@ -665,7 +665,7 @@ rownames(df.kurt_val) <- c('Curtosis')
 
 kable(df.kurt_val, caption = 'Curtosis del Ritmo Máximo Cardiaco Alcanzado')
 ```
-
+**Comentarios:** Para este caso las tres curtosis son menores a tres, lo que representa una curtosis mesocurtica o platicurtica. Lo cual indica que tiene una distribución con menores registros de valores en los extremos, esto significa que la probabilidad de eventos extremos es mayor que lo que implica la curva normal. Es decir, la distribución mesocurtica tiene colas más claras, y su probabilidad de eventos extremos es menor que lo que implica la curva normal.
 
 ### Sesgo
 Esta forma de distribución permite identificar la manera como los datos tienden a reunirse de acuerdo con la frecuencia con que se hallen dentro de la distribución. Las medidas de asimetría son indicadores que permiten establecer el grado de simetría que presentan una distribución de probabilidad de una variable aleatoria sin tener que hacer su representación gráfica.
@@ -684,3 +684,22 @@ rownames(df.skew_val) <- c('Sesgo')
 
 kable(df.skew_val, caption = 'Sesgo del Ritmo Máximo Cardiaco Alcanzado')
 ```
+
+**Comentarios:** El analisis del sesgo para los pacientes en general indica que los datos están sesgados moderadamente, ya que su valor es menor que -0.5. Por otro lado, se puede apreciar que el sesgo para los hombres indica una distribución parcial de los datos ya que su valor es mayor a -0.5 y menor que 0.5. Por último, para el caso de las mujeres se puede apreciar que los datos están sesgados moderadamente ya que su valor es menor a -0.5, lo cual indica una distribución mayor de los datos.
+
+## Correlación
+La correlación mide la forma en la que dos medidas se relacionan, para esto se puede ver que hay tanto correlación positiva como negativa o también llamada inversa. La correlación positiva describe la relación entre dos variables que cambian juntas, mientras que una correlación inversa describe la relación entre dos variables que cambian en direcciones opuestas. La correlación inversa se describe a veces como correlación negativa, que describe el mismo tipo de relación entre las variables.
+
+```{r correlation, echo=FALSE, results='asis'}
+library(ggplot2)
+library(GGally)
+# heart_data_p1 <- subset(heart_data,select = c("age", "sex", "cp", "trestbps","chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal") )
+heart_data_p1 <- subset(heart_data,select = c("age", "sex", "cp", "trestbps","chol", "fbs", "restecg", "thalach") )
+ggpairs(heart_data_p1,lower = list(continuous = "smooth"))
+```
+**Comentarios:** Para este caso se puede observar tanto correlacones negativas como positivas. A continuación analizaremos la relación entre algunas de las variables:
+- age-sex: En esta correlación se puede apreciar que hay una correlación neativa por lo que indica que ambas variables no camian juntas.
+- thalach-cp: Estas variables indican una correlación positiva, sin embargo dado su valor se puede ver que no es una correlación fuerte.
+
+Cabe destacar que la correlación no necesariamente implica una causa, las variables A y B pueden subir y bajar juntas, o A puede aumentar a medida que B cae, pero no siempre es cierto que el aumento de un factor influye directamente en el aumento o la caída del otro. Ambos pueden ser causados por un tercer factor subyacente, como una variable C, o la relación aparente entre las variables podría ser una coincidencia.
+
