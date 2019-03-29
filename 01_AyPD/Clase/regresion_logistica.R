@@ -55,6 +55,20 @@ fitted.results <- predict(model,
                           type='response'
                           )
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 fitted.results <- ifelse(fitted.results > 0.5, 1, 0)
 miss.classified.error <- mean(fitted.results != test$Survived)
 print(paste('Acurracy', 1 - miss.classified.error))

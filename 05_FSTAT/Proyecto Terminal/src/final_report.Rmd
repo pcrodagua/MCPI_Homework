@@ -24,7 +24,7 @@ Esta base de datos contiene 76 atributos, pero todos los experimentos publicados
 
 
 ## Problema Presentado
-Dentro de la perspectiva social, sanitaria uno de los mayores retos que enfrentan las organizaciones de salud es la prestación de servicios los cuales permitan al paciente un costo bajo así como accesibilidad, con una calidad superior la cual garantice un diagnóstico objetivo. Un diagnóstico preciso comprende una toma de decisiones correcta la cual permita generar un diagnostico preciso para el paciente. Una decisión medica tomada de una forma no adecuada puede conducir a problemas mayores de salud donde cada vez se vuelven más costosos y difíciles de tratar, ya en última instancia pueden traer al paciente consecuencias desastrosas incluso llegando a la muerte. Habitualmente, las decisiones tomadas por el personal clínico a menudo son tomadas basándose en la intuición de los médicos y experiencia en lugar de las observaciones estadísticas de la información presentada, lo cual termina por llevar a errores de tratamiento, costos excesivos y efectos en la calidad de los servicios médicos de los pacientes.
+Dentro de la perspectiva social-sanitaria uno de los mayores retos que enfrentan las organizaciones de salud es la prestación de servicios los cuales permitan al paciente un costo bajo así como accesibilidad, con una calidad superior la cual garantice un diagnóstico objetivo. Un diagnóstico preciso comprende una toma de decisiones correcta la cual permita generar un diagnostico preciso para el paciente. Una decisión medica tomada de una forma no adecuada puede conducir a problemas mayores de salud donde cada vez se vuelven más costosos y difíciles de tratar, ya en última instancia pueden traer al paciente consecuencias desastrosas incluso llegando a la muerte. Habitualmente, las decisiones tomadas por el personal clínico a menudo son tomadas basándose en la intuición de los médicos y experiencia en lugar de las observaciones estadísticas de la información presentada, lo cual termina por llevar a errores de tratamiento, costos excesivos y efectos en la calidad de los servicios médicos de los pacientes.
 
 
 ## Significado del Diagnóstico 
@@ -98,8 +98,9 @@ kable(tail(data), caption = 'Final del Conjunto de Datos')
 
 El conjunto de datos está conformado por 14 características y 303 observaciones.
 
+--------------------------------------------------------------------------------------------
 
-## Máximos, Mínimos y Valores Atípicos 
+## Máximos y Mínimos
 Como se ha observado, el conjunto de datos tiene un número considerable de valores por lo que una de las metas es describir estas características y obtener una conclusión. El uso de máximos y mínimos permite el cálculo de otras medidas como el rango el cual se verá posteriormente. Además permite determinar los valores atípicos dentro del conjunto de datos, ya sean los valores atípicos menores o mayores.
 
 ```{r men_women_max, echo=FALSE, results='asis' }
@@ -161,23 +162,105 @@ kable(df.min_val, caption = 'Valores Mínimos Obtenidos')
 
 **Comentarios: ** De acuerdo a los valores mínimos, respecto a la _edad_ podemos decir que siendo el valor mínimo perteneciente a un hombre con 29 años y el valor máximo a un hombre igualmente, se puede decir que es más ámplio el rango de edades en los varones. Para este caso, la _presión arterial_, presentó un caso con un valor mínimo de 94 tanto para hombres como para mujeres. Para el _colesterol_ se puede ver que el valor mínimo se encuentra en el subconjunto de los hombres, con un valor de 126, mientras que las mujeres poseen un valor mínimo de 141. Para el caso del _ritmo cardiaco_, la presencia en hombres es con un valor mínimo de 71, mientras que en el subconjunto de las mujeres es de 96. Por último, se puede ver que para la depresión post-entrenamiento, el valor para todos es 0, lo cual puede ser un posible valor atípico encontrado dentro del conjunto de datos.
 
-## Cuartiles, Percentiles y Rango
+--------------------------------------------------------------------------------------------
+
+## Cuartiles, Percentiles y Valores Atípicos
 
 ### Cuartiles
-En términos generales, los cuartiles dividen el conjunto de datos en cuatro partes iguales, con observaciones sobre el tercer cuartil que constituyen el cuarto superior de los datos del conjunto, siendo el segundo cuartil idéntico a la mediana, y el primer cuartil separado al cuarto más bajo de los tres cuartos superiores. Los valores comunmente esperados se encuentran entre el primer cuartil y el tercero, mientras que los valores atípicos se encuentran ya sea por encima del tercer cuartil o bien por debajo del primer cuartil.
+En términos generales, los cuartiles dividen el conjunto de datos en cuatro partes iguales, con observaciones sobre el tercer cuartil que constituyen el cuarto superior de los datos del conjunto, siendo el segundo cuartil idéntico a la mediana, y el primer cuartil separado al cuarto más bajo de los tres cuartos superiores. Los valores comunmente esperados se encuentran entre el primer cuartil y el tercero, mientras que los valores atípicos se encuentran ya sea por encima del tercer cuartil o bien por debajo del primer cuartil. A continuación se hace el análisis de los cuartiles de los atributos.
+
+
+```{r cuartiles_woman, echo=FALSE, results='asis'}
+q_vals_women <- data.frame(
+	quantile(women_age$age), 
+	quantile(women_trestbps$trestbps), 
+	quantile(women_chol$chol), 
+	quantile(women_thalach$thalach), 
+	quantile(women_oldpeak$oldpeak)
+)
+
+colnames(q_vals_women) <- c('Edad', 'Presión Arterial', 'Colesterol', 'Ritmo Cardíaco', 'Depresión ST')
+kable(q_vals_women, caption = 'Cuartiles de las Mujeres')
+```
+
+```{r cuartiles_men, echo=FALSE, results='asis'}
+q_vals_men <- data.frame(
+	quantile(men_age$age), 
+	quantile(men_trestbps$trestbps), 
+	quantile(men_chol$chol), 
+	quantile(men_thalach$thalach), 
+	quantile(men_oldpeak$oldpeak)
+)
+
+colnames(q_vals_men) <- c('Edad', 'Presión Arterial', 'Colesterol', 'Ritmo Cardíaco', 'Depresión ST')
+kable(q_vals_men, caption = 'Cuartiles de los Hombres')
+```
+
+```{r cuartiles_general, echo=FALSE, results='asis'}
+q_vals_general <- data.frame(
+	quantile(heart_data$age), 
+	quantile(heart_data$trestbps), 
+	quantile(heart_data$chol), 
+	quantile(heart_data$thalach), 
+	quantile(heart_data$oldpeak)
+)
+
+colnames(q_vals_general) <- c('Edad', 'Presión Arterial', 'Colesterol', 'Ritmo Cardíaco', 'Depresión ST')
+kable(q_vals_general, caption = 'Cuartiles de los Pacientes en General')
+```
+
 
 ### Percentiles
 Del mismo modo, un conjunto de datos se puede dividir aún más finamente usando percentiles; el percentil 99 separa el 1% más alto del 99% inferior, y así sucesivamente. A menos que el número de observaciones sea múltiplo de 100. 
 
 **Nota:** El percentil en la posición 50, el segundo cuartil, la mediana y el quinto decil son el mismo valor el cual está representado mediante la siguiente fórmula.
+
 $$P_{50} =  \tilde{x} = Q_2 = D_5$$
+A continuación analizaremos los percentiles desde la perspectiva de un deciles.
+```{r percentiles_woman, echo=FALSE, results='asis'}
+q_vals_women <- data.frame(
+	quantile(women_age$age, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(women_trestbps$trestbps, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(women_chol$chol, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(women_thalach$thalach, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(women_oldpeak$oldpeak, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0))
+)
 
+colnames(q_vals_women) <- c('Edad', 'Presión Arterial', 'Colesterol', 'Ritmo Cardíaco', 'Depresión ST')
+kable(q_vals_women, caption = 'Percentiles de las Mujeres')
+```
 
-## Valores Atípicos
+```{r percentiles_men, echo=FALSE, results='asis'}
+q_vals_men <- data.frame(
+	quantile(men_age$age, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(men_trestbps$trestbps, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(men_chol$chol, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(men_thalach$thalach, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(men_oldpeak$oldpeak, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0))
+)
+
+colnames(q_vals_men) <- c('Edad', 'Presión Arterial', 'Colesterol', 'Ritmo Cardíaco', 'Depresión ST')
+kable(q_vals_men, caption = 'Percentiles de los Hombres')
+```
+
+```{r percentiles_general, echo=FALSE, results='asis'}
+q_vals_general <- data.frame(
+	quantile(heart_data$age, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(heart_data$trestbps, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(heart_data$chol, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(heart_data$thalach, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0)), 
+	quantile(heart_data$oldpeak, c(.10, .20, .30, .40, .50, .60, .70, .80, .90, 1.0))
+)
+
+colnames(q_vals_general) <- c('Edad', 'Presión Arterial', 'Colesterol', 'Ritmo Cardíaco', 'Depresión ST')
+kable(q_vals_general, caption = 'Percentiles de los Pacientes en General')
+```
+
+### Valores Atípicos
 Se definen como los valores mucho mayores o menores que los demás valores en el conjunto de datos. O bien, se puede definir como el valor que radica por fuera del conjunto de datos establecido las cuales se distinguen por su distancia a los valores normales.
 
-### Regla del Pulgar
-Siendo una práctica común la _regla del pulgar_, la cual consiste en designar un valor atípico en base a la experiencia obtenida. Para esto, los valores atípicos se calculan mediante dos fórmulas. La primera permite calcular los valores atípicos mínimos, es decir los valores que están por debajo de lo esperado, para esto se emplea la siguiente fórmula: 
+#### Regla del Pulgar
+Siendo una práctica común la _regla del pulgar_, consiste en designar un valor atípico en base a la experiencia obtenida. Para esto, los valores atípicos se calculan mediante dos fórmulas. La primera permite calcular los valores atípicos mínimos, es decir los valores que están por debajo de lo esperado, para esto se emplea la siguiente fórmula: 
 
 $$V_{ai} =  Q_1 - 1.5*IQR$$
 Donde: 
@@ -196,7 +279,7 @@ Donde:
 - $Q_3$ es el valor del cuartil 3.
 - $IQR$ es el valor intercuartil.
 
-Si bien estas medidas no son utilizadas como la forma adecuada para calcular los valores atípicos, dentro de la industrial son ampliamente aceptadas. Sin embargo, estos métodos solo son usados si el analista de datos es considerado de grado midlevel o senior. Para este caso se utilizará el diagrama de caja para ver la distribución de los datos. 
+Si bien estas medidas no son utilizadas como la forma adecuada para calcular los valores atípicos, dentro de la industrial son ampliamente aceptadas. Sin embargo, estos métodos solo son usados si el analista de datos es considerado de grado midlevel o senior. Para este caso se utilizará el diagrama de caja para ver la distribución de los datos. Para visualizar los valores atípicos se utilizará el diagrama de caja, este permitirá ver el comportamiento dentro del atributo de los datos.
 
 ### Rango
 El rango permite conocer la diferencia entre el valor máximo y mínimo de la característica seleccionada. Esta medida es considerada como medida de dispersión y permite conocer el intervalo que se haya entre la distribución. Se calcula mediante la siguiente fórmula:
@@ -204,7 +287,7 @@ El rango permite conocer la diferencia entre el valor máximo y mínimo de la ca
 $$R_{var} = max(x) - min(x)$$
 
 ### Conlusiones Generales
-A continuación se realizará un análisis para las características: edad y presión arterial. Mostrando los valores mínimos, máximo, rango segundo cuartil y un breve análisis de los datos obtenidos.
+A continuación se realizará un análisis para las características: edad y presión arterial. Mostrando los valores mínimos, máximo, rango segundo cuartil, obteniendo un breve análisis de los datos obtenidos.
 
 #### Edad
 
@@ -297,8 +380,9 @@ boxplot(heart_data$trestbps,
 )
 ```
 
-**Comentarios:** Por último, en el conjunto general se puede ver un valor mínimo de 94 y un máximo de 200 con un rango de 106. Presentando valores atípicos después del tercer cuartil y un segundo cuartil de 130. 
+**Comentarios:** Por último, en el conjunto general se puede ver un valor mínimo de 94 y un máximo de 200 con un rango de 106. Presentando valores atípicos después del tercer cuartil y un segundo cuartil de 130.
 
+--------------------------------------------------------------------------------------------------------
 
 ## Medidas de Tendencia Central
 Las medidas de tendencia central permiten obtener indicadores preeliminares que brindan una interpretación numérica de las medidas obtenidas.
@@ -318,103 +402,122 @@ Por otro lado si $n$ es impar se calcula:
 
 $$\tilde{x} = x_{(n + 1)/2} +  x_{n/2}$$
 
+### Moda
+La moda es un término estadístico que se refiere al número que aparece con mayor frecuencia en un conjunto de números. Esta se encuentra al recopilar y organizar datos para contar la frecuencia de cada resultado. Donde radica sobre su recuento más alto de ocurrencias del conjunto, igualmente se le conoce como el valor modal.
+
+$$Varlor\text{ } repetido\text{ } más\text{ } frecuente $$
+
 ### Conclusiones Generales
 Para concluir las medidas de tendencia central se mostrará un histograma de frecuencias el cual contendrá un diagrama de densidad, que nos permite ver la inclinación de la curva, el promedio o media de los datos, la mediana y la desviación estándar como medida de referencia.
 
 #### Colesterol
 
 ```{r mean_chol_women, echo=FALSE, results='asis'}
+Mode <- function(x) {
+  ta = table(x)
+    tam = max(ta)
+    if (all(ta == tam))
+         mod = NA
+    else
+         if(is.numeric(x))
+    mod = as.numeric(names(ta)[ta == tam])
+    else
+         mod = names(ta)[ta == tam]
+    return(mod)
+}
+
 # --- trestbps --- 
-hist(women_chol$chol, # histogram
-col = "gray", # column color
-border = "black", 
-prob = TRUE, # show densities instead of frequencies
-xlab = "Colesterol",
-main = "Colesterol en Mujeres")
+hist(women_chol$chol,
+  col = "gray",
+  border = "black", 
+  prob = TRUE, 
+  xlab = "Colesterol",
+  main = "Colesterol en Mujeres")
+  abline(v = mean(women_chol$chol),   col = "royalblue", lwd = 2)
+  abline(v = median(women_chol$chol), col = "red", lwd = 2)
+  legend(x = "topright", 
+    c("Media", "Mediana"),
+    col = c("royalblue", "red",  "yellow"),
+    lwd = c(2, 2, 2)
+)
 
+# --- Tabla --- 
+table_women_chol <- data.frame(
+  mean(women_chol$chol),
+  median(women_chol$chol)
+)
 
-abline(v = mean(women_chol$chol),
- col = "royalblue",
- lwd = 2)
-
-
-abline(v = median(women_chol$chol),
- col = "red",
- lwd = 2)
-
-legend(x = "topright", # location of legend within plot area
- c("Promedio", "Mediana"),
- col = c("royalblue", "red"),
- lwd = c(2, 2, 2))
+colnames(table_women_chol) <- c('Media', 'Mediana')
+kable(table_women_chol, caption = 'Media y Mediana del Colesterol en Hombres')
 ```
 
-**Comentarios:**
+**Comentarios:** Para esta gráfica se puede apreciar que se obtuvo una mediana media muy cercanas, donde la media tuvo un valor de 261.3, mientras que la mediana tuvo un valor de 253. Se puede observar que la diferencia entre ambas medidas sólo fue de 12 unidades. 
 
 ```{r mean_chol_men, echo=FALSE, results='asis'}
 # --- trestbps --- 
-hist(men_chol$chol, # histogram
-col = "gray", # column color
-border = "black", 
-prob = TRUE, # show densities instead of frequencies
-xlab = "Colesterol",
-main = "Colesterol en Hombres")
+hist(men_chol$chol,
+  col = "gray",
+  border = "black", 
+  prob = TRUE, 
+  xlab = "Colesterol",
+  main = "Colesterol en Hombres")
+  abline(v = mean(men_chol$chol),   col = "royalblue", lwd = 2)
+  abline(v = median(men_chol$chol), col = "red", lwd = 2)
 
+legend(x = "topright", 
+    c("Media", "Mediana"),
+    col = c("royalblue", "red",  "yellow"),
+    lwd = c(2, 2, 2)
+)
 
-abline(v = mean(men_chol$chol),
- col = "royalblue",
- lwd = 2)
+# --- Tabla --- 
+table_men_chol <- data.frame(
+  mean(men_chol$chol),
+  median(men_chol$chol)
+)
 
-
-abline(v = median(men_chol$chol),
- col = "red",
- lwd = 2)
-
-
-legend(x = "topright", # location of legend within plot area
- c("Promedio", "Mediana"),
- col = c("royalblue", "red"),
- lwd = c(2, 2, 2))
+colnames(table_men_chol) <- c('Media', 'Mediana')
+kable(table_men_chol, caption = 'Media y Mediana del Colesterol en Mujeres')
 ```
 
-**Comentarios:**
+**Comentarios:** Para esta gráfica se puede apreciar que se obtuvo una mediana media aún más cercanas, donde la media tuvo un valor de 239.28, por otro lado la mediana tuvo un valor de 235. Se puede observar que la diferencia entre ambas medidas sólo fue de 4.28 unidades. Cabe mencionar que esta gráfica se parece más a la distribución normal, la cual será vista posteriormente.
 
 ```{r mean_chol_pac, echo=FALSE, results='asis'}
 # --- trestbps --- 
 hist(heart_data$chol, # histogram
-col = "gray", # column color
-border = "black", 
-prob = TRUE, # show densities instead of frequencies
-xlab = "Colesterol",
-main = "Colesterol en Pacientes")
+  col = "gray", # column color
+  border = "black", 
+  prob = TRUE, # show densities instead of frequencies
+  xlab = "Colesterol",
+  main = "Colesterol en Pacientes")
+
+  abline(v = mean(heart_data$chol),   col = "royalblue", lwd = 2)
+  abline(v = median(heart_data$chol), col = "red", lwd = 2)
 
 
+legend(x = "topright", 
+    c("Media", "Mediana"),
+    col = c("royalblue", "red",  "yellow"),
+    lwd = c(2, 2, 2)
+)
 
-abline(v = mean(heart_data$chol),
- col = "royalblue",
- lwd = 2)
+# --- Tabla --- 
+table_men_chol <- data.frame(
+  mean(heart_data$chol),
+  median(heart_data$chol)
+)
 
-
-abline(v = median(heart_data$chol),
- col = "red",
- lwd = 2)
-
-
-legend(x = "topright", # location of legend within plot area
- c("Promedio", "Mediana"),
- col = c("royalblue", "red"),
- lwd = c(2, 2, 2))
+colnames(table_men_chol) <- c('Media', 'Mediana')
+kable(table_men_chol, caption = 'Media y Mediana del Colesterol en Pacientes en General')
 ```
 
-**Comentarios:**
+**Comentarios:** A partir del conjunto de datos en general, se puede apreciar que de acuerdo a la media la mediana es un valor por debajo por sólo 6.26 unidades. Donde la media fue superior en los tres casos presentados.
 
-
-
-
+---------------------------------------------------------------------------------------------
 
 ## Medidas de Dispersión
 
-### Desviación Media
-
+Las medidas distribución, permiten determinar que tan estirados o compactos están los datos del conjunto. Se puede ver que las medidas de dispersión estadística son la varianza y la desviación estándar son las más comunmente usadas. Estas medidas de dispersión contrastan la ubicación o tendencia central de los datos utilizados.
 
 ### Varianza
 El segundo momento central,alrededor de la media, recibe el nombre de varianza de la variable aleatoria. La varianza de una variable aleatoria es una medida de la dispersión de la distribución de probabilidad de esta. La varianza puede representarse mediante la siguiente fórmula:
@@ -422,54 +525,50 @@ El segundo momento central,alrededor de la media, recibe el nombre de varianza d
 $$s^{2}=\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2$$
 
 ### Desviación Estándar
+La desviación estándar es una medida estadística muestra la dispersión de un conjunto de datos en relación con su media y se calcula como la raíz cuadrada de la varianza. El cálculo realizado a través de la _varianza_ permite determinar la variación entre cada punto de datos en relación con la media. Si los puntos de datos están más alejados de la media, hay una mayor desviación dentro del conjunto de datos; por lo tanto, cuanto más dispersos estén los datos, mayor será la desviación estándar. Su representación es la siguiente: 
 
-Y a su vez, se puede calcular la desviación estándar mediante:
 $$s=\sqrt{\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2}$$
 O bien:
 $$s=\sqrt{s^2}$$
 
-### Coeficiente de Variación
-
-### Conclusiones Generales
+A continuación se realizará un análisis del ritmo cardiáco máximo alcanzado, donde se analizarán las medidas de dispersión y de tendencia central.
 
 #### Ritmo Cardiáco Máximo Alcanzado
 ```{r mean_thalach_women, echo=FALSE, results='asis'}
 # --- trestbps --- 
 hist(women_thalach$thalach, # histogram
-col = "gray", # column color
-border = "black", 
-prob = TRUE, # show densities instead of frequencies
-xlab = "Ritmo Cardiaco Máximo Alcanzado",
-main = "Ritmo Cardiaco Máximo Alcanzado en Mujeres")
+  col = "gray", # column color
+  border = "black", 
+  prob = TRUE, # show densities instead of frequencies
+  xlab = "Ritmo Cardiaco Máximo Alcanzado",
+  main = "Ritmo Cardiaco Máximo Alcanzado en Mujeres")
+  
+  lines(density(women_thalach$thalach), # density plot
+  lwd = 2, # thickness of line
+  col = "orange")
 
-lines(density(women_thalach$thalach), # density plot
-lwd = 2, # thickness of line
-col = "orange")
-
-abline(v = mean(women_thalach$thalach),
- col = "royalblue",
- lwd = 2)
-
-
-abline(v = median(women_thalach$thalach),
- col = "red",
- lwd = 2)
-
-abline(v = mean(women_thalach$thalach) + sd(women_thalach$thalach),
- col = "cyan",
- lwd = 2)
-
-abline(v = mean(women_thalach$thalach) - sd(women_thalach$thalach),
- col = "cyan",
- lwd = 2)
+  abline(v = mean(women_thalach$thalach), col = "royalblue", lwd = 2)
+  abline(v = median(women_thalach$thalach), col = "red", lwd = 2)
+  abline(v = mean(women_thalach$thalach) + sd(women_thalach$thalach), col = "cyan", lwd = 2)
+  abline(v = mean(women_thalach$thalach) - sd(women_thalach$thalach), col = "cyan", lwd = 2)
 
 legend(x = "topleft", # location of legend within plot area
  c("Diagrama de Densidad", "Promedio", "Mediana", "Desviación Estándar"),
  col = c("orange", "royalblue", "red", "cyan"),
  lwd = c(2, 2, 2))
+
+# --- Tabla --- 
+table_md_women_thalach <- data.frame(
+  mean(women_thalach$thalach), 
+  median(women_thalach$thalach),
+  sd(women_thalach$thalach)
+)
+
+colnames(table_md_women_thalach) <- c('Media', 'Mediana', 'Desviación Estándar')
+kable(table_md_women_thalach, caption = 'Medidas de Tendencia Central y Dispersión en Mujeres')
 ```
 
-**Comentarios:**
+**Comentarios:** La desviación estándar ayuda a determinar el tamaño de la dispersión de los datos en comparación con el valor medio. A medida que aumenta la variación, se producen más variaciones en los valores de los datos, y puede haber una brecha mayor entre un valor de datos y otro. Para este caso se puede ver que hay una desviación estándar de 20.04, lo cual indica una dispersión respecto a los datos amplia.
 
 ```{r mean_thalach_men, echo=FALSE, results='asis'}
 # --- trestbps --- 
@@ -484,69 +583,66 @@ lines(density(men_thalach$thalach), # density plot
 lwd = 2, # thickness of line
 col = "orange")
 
-abline(v = mean(men_thalach$thalach),
- col = "royalblue",
- lwd = 2)
-
-
-abline(v = median(men_thalach$thalach),
- col = "red",
- lwd = 2)
-
-abline(v = mean(men_thalach$thalach) + sd(men_thalach$thalach),
- col = "cyan",
- lwd = 2)
-
-abline(v = mean(men_thalach$thalach) - sd(men_thalach$thalach),
- col = "cyan",
- lwd = 2)
+abline(v = mean(men_thalach$thalach), col = "royalblue", lwd = 2)
+abline(v = median(men_thalach$thalach), col = "red", lwd = 2)
+abline(v = mean(men_thalach$thalach) + sd(men_thalach$thalach), col = "cyan", lwd = 2)
+abline(v = mean(men_thalach$thalach) - sd(men_thalach$thalach), col = "cyan", lwd = 2)
 
 legend(x = "topleft", # location of legend within plot area
  c("Diagrama de Densidad", "Promedio", "Mediana", "Desviación Estándar"),
  col = c("orange", "royalblue", "red", "cyan"),
  lwd = c(2, 2, 2))
+
+# --- Tabla --- 
+table_men_thalach_ <- data.frame(
+  mean(men_thalach$thalach),
+  median(men_thalach$thalach),
+  sd(men_thalach$thalach)
+)
+
+colnames(table_men_thalach_) <- c('Media', 'Mediana', 'Desviación Estándar')
+kable(table_men_thalach_, caption = 'Medidas de Tendencia Central y Dispersión en Hombres')
 ```
 
-**Comentarios:**
-
+**Comentarios:** Para este segundo caso, se puede observar que la desviación estándar es de 24.13, siendo aún más alta en hombres que en mujeres. Por otro lado, se puede observar que el diagrama de densidad está más centralizado donde incluso se puede ver que la diferencia entre la media y la mediana es muy baja, con un valor de 6 unidades.
+ 
 ```{r mean_thalach_pac, echo=FALSE, results='asis'}
 # --- trestbps --- 
 hist(heart_data$thalach, # histogram
-col = "gray", # column color
-border = "black", 
-prob = TRUE, # show densities instead of frequencies
-xlab = "Ritmo Cardiaco Máximo Alcanzado",
-main = "Ritmo Cardiaco Máximo Alcanzado en Pacientes")
+  col = "gray", # column color
+  border = "black", 
+  prob = TRUE, # show densities instead of frequencies
+  xlab = "Ritmo Cardiaco Máximo Alcanzado",
+  main = "Ritmo Cardiaco Máximo Alcanzado en Pacientes")
 
-lines(density(heart_data$thalach), # density plot
-lwd = 2, # thickness of line
-col = "orange")
+  lines(density(heart_data$thalach), lwd = 2, col = "orange")
+  
+  abline(v = mean(heart_data$thalach), col = "royalblue", lwd = 2)
+  abline(v = median(heart_data$thalach), col = "red", lwd = 2)
+  abline(v = mean(heart_data$thalach) + sd(heart_data$thalach), col = "cyan", lwd = 2)
+  abline(v = mean(heart_data$thalach) - sd(heart_data$thalach), col = "cyan", lwd = 2)
 
-abline(v = mean(heart_data$thalach),
- col = "royalblue",
- lwd = 2)
+legend(x = "topleft",
+  c("Diagrama de Densidad", "Promedio", "Mediana", "Desviación Estándar"),
+  col = c("orange", "royalblue", "red", "cyan"),
+  lwd = c(2, 2, 2)
+)
 
+# --- Tabla --- 
+table_men_chol <- data.frame(
+  mean(heart_data$thalach),
+  median(heart_data$thalach),
+  sd(heart_data$thalach)
+)
 
-abline(v = median(heart_data$thalach),
- col = "red",
- lwd = 2)
+colnames(table_men_chol) <- c('Media', 'Mediana', 'Desviación Estándar')
+kable(table_men_chol, caption = 'Medidas de Tendencia Central y Dispersión de Pacientes en General')
 
-abline(v = mean(heart_data$thalach) + sd(heart_data$thalach),
- col = "cyan",
- lwd = 2)
-
-abline(v = mean(heart_data$thalach) - sd(heart_data$thalach),
- col = "cyan",
- lwd = 2)
-
-legend(x = "topleft", # location of legend within plot area
- c("Diagrama de Densidad", "Promedio", "Mediana", "Desviación Estándar"),
- col = c("orange", "royalblue", "red", "cyan"),
- lwd = c(2, 2, 2))
 ```
 
-**Comentarios:**
+**Comentarios:** Por último, se puede observar que para los pacientes en general hay una desviación estándar de 22.9 unidades, con una mediana de 153 y una media de 149.64.
 
+------------------------------------------------------------------------------------------------------
 
 ## Curtosis y Sesgo
 
