@@ -1,0 +1,72 @@
+---
+title: "Propuesta de Uso de Algoritmos"
+author: 'Gaby, Ezra, Mario y Pablo'
+date: "April 7, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+library(GGally)
+library(knitr)
+library(PerformanceAnalytics)
+```
+
+<style>
+  body {
+    text-align: justify
+  }
+</style>
+
+## Integrantes
+
+- Gabriela
+- Ezra
+- Mario Iván Oliva de la Torre
+- Pablo César Rodríguez Aguayo
+
+## Business Understanding
+
+
+## Data Understanding
+```{r data_und, echo=FALSE, results='asis'}
+dataset = read.csv(file = '/home/ospcx/Proyects/MCPI_Homework/01_AyPD/Clase/compentencia/cancer.csv', stringsAsFactors = FALSE) 
+str(dataset)
+
+```
+
+
+## Data Preparation
+
+1. Se remueven los valores nulos.
+2. Se parte el conjunto de datos en entrenamiento y pruebas.
+3. Se hace una análisis de correlación entre las variables.
+4. Se cambian los valores 'M' y 'B' por 1 y 0.
+
+```{r data_prep, echo=FALSE, results='asis'}
+dataset$Diagnosis <- lapply(dataset$Diagnosis, as.character)
+dataset$Diagnosis[dataset$Diagnosis == 'M'] <- 1
+dataset$Diagnosis[dataset$Diagnosis == 'B'] <- 0
+dataset$Diagnosis <- as.numeric(dataset$Diagnosis)
+dataset <- dataset[!is.na(dataset$Diagnosis),]
+
+dataset <- dataset[2:length(dataset)]
+kable(head(dataset[c(1:6)]), caption = 'Conjunto de Datos Preparado')
+```
+
+## Métricas de Correlación
+```{r data_prep_corr, echo=FALSE, results='asis'}
+chart.Correlation(dataset[,c(2:11)],histogram=TRUE, col="grey10", pch=1, main="Promedio")
+```
+
+
+## Modeling
+
+- Logistic Regression
+- Decision Trees
+- SVM (Support Vector Machines)
+- Random Forest
+
+## Evaluation
+

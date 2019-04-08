@@ -2,7 +2,14 @@
 title: "Análisis Estadístico de Enfermedades en el Corazón"
 author: "Pablo César Rodríguez Aguayo"
 date: "Marzo 14, 2019*"
-output: html_document
+output: 
+  html_document:
+    toc: yes
+    theme: cosmo
+    highlight: tango
+    code_folding: hide
+    fig_width: 12
+    fig_height: 8
 ---
 
 ```{r setup, include=FALSE}
@@ -87,7 +94,7 @@ Dentro de las características del conjunto de datos, se presentan las siguiente
 ### Cabecera
 
 ```{r head, echo=FALSE, results='asis'}
-kable(head(data), caption = 'Inicio del Conjunto de Datos')
+
 ```
 
 ### Cola
