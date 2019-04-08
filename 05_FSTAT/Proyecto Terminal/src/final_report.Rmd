@@ -665,6 +665,7 @@ rownames(df.kurt_val) <- c('Curtosis')
 
 kable(df.kurt_val, caption = 'Curtosis del Ritmo Máximo Cardiaco Alcanzado')
 ```
+
 **Comentarios:** Para este caso las tres curtosis son menores a tres, lo que representa una curtosis mesocurtica o platicurtica. Lo cual indica que tiene una distribución con menores registros de valores en los extremos, esto significa que la probabilidad de eventos extremos es mayor que lo que implica la curva normal. Es decir, la distribución mesocurtica tiene colas más claras, y su probabilidad de eventos extremos es menor que lo que implica la curva normal.
 
 ### Sesgo
@@ -697,6 +698,7 @@ library(GGally)
 heart_data_p1 <- subset(heart_data,select = c("age", "sex", "cp", "trestbps","chol", "fbs", "restecg", "thalach") )
 ggpairs(heart_data_p1,lower = list(continuous = "smooth"))
 ```
+
 **Comentarios:** Para este caso se puede observar tanto correlacones negativas como positivas. A continuación analizaremos la relación entre algunas de las variables:
 - age-sex: En esta correlación se puede apreciar que hay una correlación neativa por lo que indica que ambas variables no camian juntas.
 - thalach-cp: Estas variables indican una correlación positiva, sin embargo dado su valor se puede ver que no es una correlación fuerte.
