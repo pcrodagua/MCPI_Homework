@@ -29,7 +29,7 @@ test_set = subset(dataset, split == FALSE)
 # PROCESSING
 library(e1071) 
 
-classifier = svm(formula = Diagnosis ~ ., 
+classifier = svm(formula = Diagnosis ~ concavity + concave.points + area + smoothness, 
                  data = training_set, 
                  type = 'C-classification', 
                  kernel = 'linear') 
