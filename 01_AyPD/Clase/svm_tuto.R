@@ -34,6 +34,7 @@ nuevos <- data.frame(
 
 clase <- as.numeric(as.character(datos$animal))
 # old
+pdf('grafica.tiff')
 plot(datos[, -3], col=(clase + 3)/2, pch=19, xlim=c(0, 250), ylim=c(0,250))
 
 # graficando los datos nuevo y viejos
@@ -43,4 +44,7 @@ points(nuevos[2, ], col='blue', pch=19)
 points(nuevos[3, ], col='pink', pch=19)
 # hyperplane
 abline(a = -b/w[1, 2], b=-w[1, 1]/w[1, 2], col='red', lty=3)
+
+dev.off()
+
 predict(model_svm, nuevos)

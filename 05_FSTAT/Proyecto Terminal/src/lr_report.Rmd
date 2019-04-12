@@ -1,0 +1,100 @@
+---
+title: "Regresión Lineal"
+author: "Pablo César Rodríguez Aguayo"
+date: "April 11, 2019"
+output: 
+  html_document:
+    toc: yes
+    theme: cosmo
+    highlight: tango
+    code_folding: hide
+    fig_width: 12
+    fig_height: 8
+---
+
+<style>
+body {
+  text-align: justify
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(zoo)
+```
+
+```{r data_read, echo=FALSE, results='asis'}
+library(ggplot2)
+setwd("/home/ospcx/Proyects/MCPI_Homework/05_FSTAT/Proyecto Terminal/src/")
+lr_data_ <- read.csv(file = "../data/data.csv", header = TRUE, sep = ",", stringsAsFactors=FALSE)
+lr_data <- data.frame(lr_data_)
+colnames(lr_data) <- c('X', 'Y')
+modelo_lm <- lm(Y ~., data = lr_data)
+kable(head(lr_data), caption = 'Cabecera del Conjunto de Datos')
+```
+
+## Regresión Lineal
+La regresión lineal se emplea como un modelo el cual permite ejemplificar la relación entre la variable dependiente y su variable independiente. Comunmente, las relaciones son modeladas utilizando funciones predictoras lineales donde sus parametros son calculados de los datos, a este tipo de modelos se les conoce como lineares.
+
+#### Implementación de la Regresión Lineal
+
+```{r lr_plot, echo=FALSE, results='asis'}
+ggplot(lr_data, aes(x = X, y = Y)) + 
+  geom_point() +
+  stat_smooth(method = "lm", col = "red")
+```
+
+### Supuestos del Modelo de Regresión
+
+Como se sabe, el modelo de regresión lineal ha de cumplir una serie de supuestos que garanticen su correcta aplicación:
+
+#### **Linealidad** 
+Existe linealidad si se presenta una relación significativa entre la variable  que se quiere predecir y las otras variables. Puede usarse el coeficiente "R cuadrado ajustado", para saber si existe linealidad (mayor o igual a 0.7 suele ser "indicio" de linealidad). 
+
+```{r linealidad, echo=FALSE, results='asis'}
+ggplot(lr_data, aes(x = X, y = Y)) + 
+  geom_point() +
+  stat_smooth(method = "lm", col = "red")
+paste("R-Cuadrado Ajustado=", round(summary(modelo_lm)$adj.r.squared,2))
+```
+
+**Comentarios:** Si cumple el supuesto de linealidad ya que $R^2$ es mayor a 0.7 con un valor de. 0.76.
+
+#### **Independencia de Errores** 
+
+Este supuesto asume que los residuos no están auto-correlacionados, por lo cual son independientes. La autocorrelacion es cuando el residuo en la predicción de un valor es afectado por el residuo en la predicción del valor más cercano. Esta autocorrelacion suele presentarse en series de tiempo. Para validar la independencia de los residuos puede usarse el test Durbin-Watson, cuyo resultado estará cerca de 2 cuando los residuos son independientes. Si el valor está entre 1.5 y 2.5 puede concluirse que no existe dependencia de los residuos.
+
+```{r lr_lm_test, echo=FALSE, results='asis'}
+library(lmtest)
+test_lr_lm <- dwtest(Y ~., data = lr_data)
+pval <- test_lr_lm$p.value
+dw_ <- test_lr_lm$statistic
+dw_
+test_lr_lm
+```
+
+**Comentarios:** Con un valor-p de: 1.86, mayor de 0.05 no se puede rechazar la hipótesis nula. Por lo que se aunque el valor de la independencia de los errores sea bajo, se acepta la hipótesis alternativa, cumpliendo con la asumpción solicitada.
+
+
+#### **Homocedasticidad** 
+Este supuesto asume que los residuos en las predicciones son constantes en cada predicción (es decir, varianza constante). Este supuesto valida que los residuos no aumenta ni disminuye cuando se predicen valores cada vez más altos o mas pequeños. A esta constancia en los errores de predicción le dicen "homocedasticidad", y cuando los errores varían, le dicen _heterocedasticidad_. Para comprobar la homocedasticidad para los residuos estudentizados del modelo ajustado y contrastarla se utiliza la función _bptest()_.
+
+```{r bptest_, echo=FALSE, results='asis'}
+bptest_data <- bptest(modelo_lm)
+bptest_data$p.value
+```
+
+**Comentarios:** Con un valor-p de 0.92, mayor a 0.05 no se puede rechazar la hipótesis nula. Por lo que se supone homogeneidad de varianzas o heterocedasticidad.
+
+#### **Supuesto de Normalidad de los Residuos** 
+Este supuesto asume que los residuos deben presentar una distribución normal, y la ausencia de normalidad supone  poca precisión en los intervalos de confianza creados por el modelo. Normalidad de los residuos Comprobar el contraste de normalidad para los residuos estudentizados del modelo ajustado. Para contrastar la normalidad usamos el test de Shapiro-Wilk, con la función _shapiro.test()_.
+
+```{r normalidad, echo=FALSE, results='asis'}
+# Supuesto de Normalidad de los Residuos
+
+ggplot(data=lr_data, aes(modelo_lm$residuals)) + 
+  geom_histogram()
+```
+
+**Comentarios:** En base a la distribución anterior, se puede apreciar que no es una distribución normal. Por lo cual se asume poca precision en los intervalos de confianza creados por el modelo.

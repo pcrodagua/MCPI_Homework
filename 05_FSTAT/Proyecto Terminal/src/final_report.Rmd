@@ -713,36 +713,7 @@ ggpairs(heart_data_p1,lower = list(continuous = "smooth"))
 
 Cabe destacar que la correlación no necesariamente implica una causa, las variables A y B pueden subir y bajar juntas, o A puede aumentar a medida que B cae, pero no siempre es cierto que el aumento de un factor influye directamente en el aumento o la caída del otro. Ambos pueden ser causados por un tercer factor subyacente, como una variable C, o la relación aparente entre las variables podría ser una coincidencia.
 
-## Regresión Lineal
+
+### Distribución T-Student
 
 
-
-### Supuestos del Modelo de Regresión
-
-Como se sabe, el modelo de regresión lineal ha de cumplir una serie de supuestos que garanticen su correcta aplicación:
-
-- **Linealidad:** Existe linealidad si se presenta una relación significativa entre la variable  que se quiere predecir y las otras variables. Puede usarse el coeficiente "R cuadrado ajustado", para saber si existe linealidad (mayor o igual a 0.7 suele ser "indicio" de linealidad). 
-- **Independencia de Errores:** Este supuesto asume que los residuos no están auto-correlacionados, por lo cual son independientes. La autocorrelacion es cuando el residuo en la predicción de un valor es afectado por el residuo en la predicción del valor más cercano. Esta autocorrelacion suele presentarse en series de tiempo. Para validar la independencia de los residuos puede usarse el test durbin-watson, cuyo resultado estará cerca de 2 cuando los residuos son independientes. Si el valor está entre 1.5 y 2.5 puede concluirse que no existe dependencia de los residuos.
-- **Homocedasticidad:** Este supuesto asume que los residuos en las predicciones son constantes en cada predicción (es decir, varianza constante). Este supuesto valida que los residuos no aumenta ni disminuye cuando se predicen valores cada vez más altos o mas pequeños. A esta constancia en los errores de predicción le dicen "homocedasticidad", y cuando los errores varían, le dicen _heterocedasticidad_.
-- **Supuesto de Normalidad de los Residuos:** Este supuesto asume que los residuos deben presentar una distribución normal, y la ausencia de normalidad supone  poca precisión en los intervalos de confianza creados por el modelo.
-
- 
-### Regresión Lineal
-
-```{r reg_lineal, echo=FALSE, results='asis'}
-data_glm <- data.frame(heart_data[c(5, 8)])
-print(str(data_glm))
-model_glm <- lm(chol~ thalach, data = data_glm)
-
-# Supuesto de Linealidad 
-par(mfrow = c(1,2))
-plot(data_glm$chol, data_glm$thalach, cex.axis=.7, cex.lab=.7, col=4)
-abline(model_glm,col=4)
-legend("bottomright",
-legend = paste(
-	"R-Cuadrado Ajustado=",
-	round(summary(model_glm)$adj.r.squared,2)), 
-	cex=.7)
-	title(main="Sí cumple Supuesto de Linealidad R cuadrado Ajustado es mayor a 0.7",
-		cex.main=.7,col.main=4)
-```
