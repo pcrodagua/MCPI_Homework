@@ -38,7 +38,7 @@ classifier = svm(formula = Diagnosis ~ ., # concavity + concave.points + area + 
 y_pred = predict(classifier, newdata = test_set) 
 y_pred
 # confussion matrix
-cm = table(test_set[, 1], y_pred)
+cm = table(test_set[, length(data_)], y_pred)
 cm
 
 fitted.results <- ifelse(y_pred > 0.5, 1, 0)
