@@ -27,26 +27,32 @@ body {
 # **Parte I**: Introducción
 
 ## Heart Disease UCI (Enfermedades del Corazón UCI)
+
 Esta base de datos contiene 76 atributos, pero todos los experimentos publicados se refieren al uso de un subconjunto de 14 de ellos. En particular, la base de datos de Cleveland es la única que ha sido utilizada por los investigadores de Machine Learning hasta la fecha. El campo "objetivo" se refiere a la presencia de una enfermedad cardíaca en el paciente. Es un valor entero de 0 (sin presencia) a 4. Los experimentos con la base de datos de Cleveland se han concentrado en simplemente intentar distinguir la presencia (valores 1,2,3,4) de la ausencia (valor 0). Los nombres y números de seguridad social de los pacientes se eliminaron recientemente de la base de datos y se reemplazaron con valores ficticios.
 
 
 ## Problema Presentado
+
 Dentro de la perspectiva social-sanitaria uno de los mayores retos que enfrentan las organizaciones de salud es la prestación de servicios los cuales permitan al paciente un costo bajo así como accesibilidad, con una calidad superior la cual garantice un diagnóstico objetivo. Un diagnóstico preciso comprende una toma de decisiones correcta la cual permita generar un diagnostico preciso para el paciente. Una decisión medica tomada de una forma no adecuada puede conducir a problemas mayores de salud donde cada vez se vuelven más costosos y difíciles de tratar, ya en última instancia pueden traer al paciente consecuencias desastrosas incluso llegando a la muerte. Habitualmente, las decisiones tomadas por el personal clínico a menudo son tomadas basándose en la intuición de los médicos y experiencia en lugar de las observaciones estadísticas de la información presentada, lo cual termina por llevar a errores de tratamiento, costos excesivos y efectos en la calidad de los servicios médicos de los pacientes.
 
 
 ## Significado del Diagnóstico 
+
 El diagnóstico de enfermedad cardíaca se realiza mediante una combinación de signos clínicos y resultados de pruebas. Los tipos de pruebas que se realizarán se elegirán en función de lo que el médico cree que está pasando, que va desde los electrocardiogramas y las tomografías computarizadas (TC) cardiacas hasta las pruebas de sangre y las pruebas de esfuerzo con ejercicios.
 
 
 ## Alcance del Estudio
+
 Para propositos de esta investigación, se pretende realizar un análsis exploratorio de los factores que influyen sobre las enfermedades cardiacas. Lo cual permtirá posteriormente aplicar diversas técnicas de minería de datos para descubrir patrones dentro de los datos que nos permitan obtener mediciones y descripciones de los datos a través de la estadística descriptiva.
 
 
 ## Análisis Exploratorio de Datos
+
 El análisis exploratorio de datos permitirá resumir las características que rodean el fenómeno en cuestión. La importancia del análisis exploratorio permite proporcionar y definir la percepcion del conjunto de datos utilizado. Permtiendo definir los objetivos a través del análisis de los datos mediante resumenes numéricos los cuales se enfocan en el aspecto estadístico. De igual manera, permiten enfocarse en los objetivos de la investigacion a través de la delimitación de los datos no necesarios. 
 
 
 ## Recolección de Datos y Preprocesamiento
+
 La recolección de datos y preprocesamiento estuvo a cargo de: 
 
 1. Hungarian Institute of Cardiology. Budapest: Andras Janosi, M.D. 
@@ -62,6 +68,8 @@ Por lo que se desconocen los métodos de recolección y preprocesamiento emplead
 
 
 --------------------------------------------------------------------------------------------
+
+
 
 
 # **Parte II**: Análisis Exploratorio
