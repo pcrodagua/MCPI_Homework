@@ -13167,7 +13167,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">knitr</span><span class="p">)</span>
@@ -13192,7 +13192,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="s">&quot;../data/heart.csv&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">stringsAsFactors</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
@@ -21052,7 +21052,7 @@ $$A_s = \frac{3(\bar{x} - \tilde{x})}{s}$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="n">cormat</span> <span class="o">&lt;-</span> <span class="nf">round</span><span class="p">(</span><span class="nf">cor</span><span class="p">(</span><span class="n">heart_data</span><span class="p">),</span><span class="m">2</span><span class="p">)</span>
@@ -22880,8 +22880,10 @@ CAQCgUAgY4T/AyfCw16j7SFLAAAAAElFTkSuQmCC"
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Comentarios:</strong> Para este caso se puede observar tanto correlacones negativas como positivas. A continuación analizaremos la relación entre algunas de las variables:</p>
 <ul>
-<li>age-sex: En esta correlación se puede apreciar que hay una correlación neativa por lo que indica que ambas variables no camian juntas.</li>
+<li>age-sex: En esta correlación se puede apreciar que hay una correlación neativa por lo que indica que ambas variables no cambian juntas. Probablemente, la edad no sea dependiente del sexo.</li>
 <li>thalach-cp: Estas variables indican una correlación positiva, sin embargo dado su valor se puede ver que no es una correlación fuerte.</li>
+<li>La correlación positiva más fuerte fue ca-thalach, lo cual tiene sentido ya que es el número de vasos sanguíneos y la presión arterial.</li>
+<li>Por otro lado, la correlación negativa más fuerte es entre cp-exang.</li>
 </ul>
 <p>Cabe destacar que la correlación no necesariamente implica una causa, las variables A y B pueden subir y bajar juntas, o A puede aumentar a medida que B cae, pero no siempre es cierto que el aumento de un factor influye directamente en el aumento o la caída del otro. Ambos pueden ser causados por un tercer factor subyacente, como una variable C, o la relación aparente entre las variables podría ser una coincidencia.</p>
 
@@ -22891,21 +22893,33 @@ CAQCgUAgY4T/AyfCw16j7SFLAAAAAElFTkSuQmCC"
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Principal-Component-Analysisi">Principal Component Analysisi<a class="anchor-link" href="#Principal-Component-Analysisi">&#182;</a></h3>
+<h3 id="An&#225;lisis-de-Componentes-Principales">An&#225;lisis de Componentes Principales<a class="anchor-link" href="#An&#225;lisis-de-Componentes-Principales">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Graph of individuals. Individuals with a similar profile are grouped together.</p>
+<p>El análisis de componentes principales(PCA), es un método de reducción de dimensionalidad que se usa para reducir la dimensionalidad de grandes conjuntos de datos, al transformar un gran conjunto de variables en uno más pequeño que aún contiene la mayor parte de la información en el original (o incluso el mismo número de variables donde estas sólo se simplifican).</p>
+<p>La reducción de la cantidad de variables de un conjunto de datos conlleva un costo de precisión, donde la reducción de la dimensionalidad es cambiar un poco de precisión por simplicidad. Debido a que los conjuntos de datos más pequeños son más fáciles de explorar y visualizar, y hacer que el análisis de los datos sea mucho más fácil y rápido para los modelos de aprendizaje probabilisticos.</p>
+<p>La idea general en sí es reducir el número de variables de un conjunto de datos, mientras se conserva la mayor cantidad de información posible.</p>
+<p>Para reducir los datos, se realizan los siguientes pasos:</p>
+<p><strong>1. Estandarización</strong></p>
+<p>El objetivo de este paso es estandarizar el rango de las variables iniciales continuas para que cada una de ellas contribuya por igual al análisis.</p>
+<p>Específicamente, la razón por la que es crítico realizar una estandarización antes de PCA, es que este último es bastante sensible con respecto a las variaciones de las variables iniciales. Es decir, si hay grandes diferencias entre los rangos de las variables iniciales, las variables con rangos más grandes dominarán sobre las que tienen rangos pequeños (por ejemplo, una variable que oscila entre 0 y 100 dominará sobre una variable que oscila entre 0 y 1 ), lo que conducirá a resultados sesgados. Por lo tanto, transformar los datos a escalas comparables puede evitar este problema.</p>
+<p>Matemáticamente, esto se puede hacer restando la media y dividiendo por la desviación estándar para cada valor de cada variable.</p>
+$$ z = \frac{x_i - \mu}{s} $$<p><strong>2. Se calcula de la matriz de covarianza</strong></p>
+<p>El objetivo de este paso es comprender cómo las variables del conjunto de datos de entrada varían de la media entre sí, o en otras palabras, para ver si existe alguna relación entre ellas. Porque a veces, las variables están altamente correlacionadas de tal manera que contienen información redundante. Entonces, para identificar estas correlaciones, calculamos la matriz de covarianza.</p>
+<p>La matriz de covarianza es una matriz simétrica p × p (donde p es el número de dimensiones) que tiene como entradas las covarianzas asociadas con todos los pares posibles de las variables iniciales.</p>
+<p><strong>3. Cálculo de los vectores propios y los valores propios de la matriz de covarianza para identificar los componentes principales</strong></p>
+<p>Los vectores propios y los valores propios se calculan a partir de la matriz de covarianza para determinar los componentes principales de los datos. Como resultado, se obtienen los componentes principales, los cuales representan nuevas variables que se construyen como combinaciones lineales. Estas combinaciones se realizan de tal manera que las nuevas variables (es decir, los componentes principales) no están correlacionadas y la mayor parte de la información dentro de las variables iniciales se comprime en los primeros componentes. Entonces, donde los datos tridimensionales genera 10 componentes nuevos tal como se puede ver en la siguiente imagen.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">factoextra</span><span class="p">)</span>
@@ -23617,21 +23631,25 @@ iaDYAQAASATFDgAAQCIodgAAABJBsQMAAJCI/wdYDvOy57SLkQAAAABJRU5ErkJggg=="
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Graph of variables. Positive correlated variables point to the same side of the plot. Negative correlated variables point to opposite sides of the graph.</p>
+<p>La gráfica anterior muestra las variables correlacionadas positivas las cuales apuntan al mismo lado de la gráfica. Las variables correlacionadas negativas apuntan a lados opuestos de la gráfica.</p>
+<p>Organizar la información en los componentes principales de esta manera, le permite reducir la dimensionalidad sin perder mucha información, descartando los componentes con poca información y considerando los componentes restantes como nuevas variables.</p>
+<p>Una cosa importante a tener en cuenta aquí es que, los componentes principales son menos interpretables y no tienen ningún significado real, ya que se construyen como combinaciones lineales de las variables iniciales.</p>
+<p>Desde la perspectiva geométrica, los componentes principales representan las direcciones de los datos que explican una cantidad máxima de variación. Es decir, las líneas que capturan la mayor parte de la información de los datos. La relación entre la varianza y la información aquí es, cuanto mayor sea la varianza transportada por una línea, mayor será la dispersión de los puntos de datos a lo largo de ella, y cuanto mayor sea la dispersión a lo largo de una línea, más información tendrá. En resumen, los componentes principales como nuevos ejes que proporcionan el mejor ángulo para ver y evaluar los datos, de modo que las diferencias entre las observaciones sean más visibles.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">fviz_pca_ind</span><span class="p">(</span><span class="n">res.pca</span><span class="p">,</span>
-             <span class="n">col.ind</span> <span class="o">=</span> <span class="s">&quot;cos2&quot;</span><span class="p">,</span> <span class="c1"># Color by the quality of representation</span>
-             <span class="n">gradient.cols</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;#00AFBB&quot;</span><span class="p">,</span> <span class="s">&quot;#E7B800&quot;</span><span class="p">,</span> <span class="s">&quot;#FC4E07&quot;</span><span class="p">),</span>
-             <span class="n">repel</span> <span class="o">=</span> <span class="kc">TRUE</span>     <span class="c1"># Avoid text overlapping</span>
-             <span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">fviz_pca_ind</span><span class="p">(</span>
+    <span class="n">res.pca</span><span class="p">,</span>
+     <span class="n">col.ind</span> <span class="o">=</span> <span class="s">&quot;cos2&quot;</span><span class="p">,</span> <span class="c1"># Color by the quality of representation</span>
+     <span class="n">gradient.cols</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;#00AFBB&quot;</span><span class="p">,</span> <span class="s">&quot;#E7B800&quot;</span><span class="p">,</span> <span class="s">&quot;#FC4E07&quot;</span><span class="p">),</span>
+     <span class="n">repel</span> <span class="o">=</span> <span class="kc">TRUE</span>     <span class="c1"># Avoid text overlapping</span>
+<span class="p">)</span>
 </pre></div>
 
     </div>
@@ -30530,23 +30548,17 @@ zQgzetgAAAAASUVORK5CYII="
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Biplot of individuals and variables</p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">fviz_pca_biplot</span><span class="p">(</span><span class="n">res.pca</span><span class="p">,</span> <span class="n">repel</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
-                <span class="n">col.var</span> <span class="o">=</span> <span class="s">&quot;#2E9FDF&quot;</span><span class="p">,</span> <span class="c1"># Variables color</span>
-                <span class="n">col.ind</span> <span class="o">=</span> <span class="s">&quot;#696969&quot;</span>  <span class="c1"># Individuals color</span>
-                <span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">fviz_pca_biplot</span><span class="p">(</span>
+    <span class="n">res.pca</span><span class="p">,</span> 
+    <span class="n">repel</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+    <span class="n">col.var</span> <span class="o">=</span> <span class="s">&quot;#2E9FDF&quot;</span><span class="p">,</span> <span class="c1"># Variables color</span>
+    <span class="n">col.ind</span> <span class="o">=</span> <span class="s">&quot;#696969&quot;</span>  <span class="c1"># Individuals color</span>
+<span class="p">)</span>
 </pre></div>
 
     </div>
@@ -36395,14 +36407,15 @@ AAAADuI/5RibmP/THnUAAAAASUVORK5CYII="
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Access to the PCA results</p>
+<p><strong>4. Vectores de Características</strong></p>
+<p>En el paso anterior, se calculan los vectores propios y se ordenan por sus valores propios en orden descendente, donde se encuentran los componentes principales de acuerdo al orden de importancia. En este paso, lo que se hace es elegir si mantener todos estos componentes o descartar aquellos de menor importancia (de valores propios bajos), y formar con los restantes una matriz de vectores que llamamos vector característico o vector de características. En la siguientes tablas se pueden apreciar las forman en las cuales se muestran los valores propios y los vectores propios.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Eigenvalues</span>
@@ -36447,6 +36460,46 @@ AAAADuI/5RibmP/THnUAAAAASUVORK5CYII="
 </div>
 
 </div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>5. Creación de los ejes de componentes principales</strong></p>
+<p>En este paso, el objetivo es utilizar el vector de características formado utilizando los vectores propios de la matriz de covarianza, para reorientar los datos de los ejes originales a los representados por los componentes principales (de ahí el nombre Análisis de componentes principales). Esto se puede hacer multiplicando la transposición del conjunto de datos original por la transposición del vector de características. El resultado se puede ver en el último.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Results for Variables</span>
+<span class="n">res.var</span> <span class="o">&lt;-</span> <span class="nf">get_pca_var</span><span class="p">(</span><span class="n">res.pca</span><span class="p">)</span>
+<span class="n">res.var</span><span class="o">$</span><span class="n">coord</span>          <span class="c1"># Coordinates</span>
+<span class="n">res.var</span><span class="o">$</span><span class="n">contrib</span>        <span class="c1"># Contributions to the PCs</span>
+<span class="n">res.var</span><span class="o">$</span><span class="n">cos2</span>           <span class="c1"># Quality of representation </span>
+
+<span class="c1"># Results for individuals</span>
+<span class="n">res.ind</span> <span class="o">&lt;-</span> <span class="nf">get_pca_ind</span><span class="p">(</span><span class="n">res.pca</span><span class="p">)</span>
+<span class="n">res.ind</span><span class="o">$</span><span class="n">coord</span>          <span class="c1"># Coordinates</span>
+<span class="n">res.ind</span><span class="o">$</span><span class="n">contrib</span>        <span class="c1"># Contributions to the PCs</span>
+
+<span class="n">res.ind</span><span class="o">$</span><span class="n">cos2</span>           <span class="c1"># Quality of representation</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
 
 <div class="output_area">
 
@@ -36776,73 +36829,6 @@ AAAADuI/5RibmP/THnUAAAAASUVORK5CYII="
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1"># Results for Variables</span>
-<span class="c1">#res.var &lt;- get_pca_var(res.pca)</span>
-<span class="c1">#res.var$coord          # Coordinates</span>
-<span class="c1">#res.var$contrib        # Contributions to the PCs</span>
-<span class="c1">#res.var$cos2           # Quality of representation </span>
-
-<span class="c1"># Results for individuals</span>
-<span class="c1">#res.ind &lt;- get_pca_ind(res.pca)</span>
-<span class="c1">#res.ind$coord          # Coordinates</span>
-<span class="c1">#res.ind$contrib        # Contributions to the PCs</span>
-
-<span class="nf">head</span><span class="p">(</span><span class="n">res.ind</span><span class="o">$</span><span class="n">cos2</span><span class="p">)</span>           <span class="c1"># Quality of representation</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<table>
-<thead><tr><th></th><th scope=col>Dim.1</th><th scope=col>Dim.2</th><th scope=col>Dim.3</th><th scope=col>Dim.4</th><th scope=col>Dim.5</th><th scope=col>Dim.6</th><th scope=col>Dim.7</th><th scope=col>Dim.8</th><th scope=col>Dim.9</th><th scope=col>Dim.10</th><th scope=col>Dim.11</th><th scope=col>Dim.12</th><th scope=col>Dim.13</th></tr></thead>
-<tbody>
-	<tr><th scope=row>1</th><td>0.01581614  </td><td>0.2187906353</td><td>0.2486639281</td><td>0.290822001 </td><td>5.717765e-03</td><td>0.1192282838</td><td>0.0005881407</td><td>0.0220287442</td><td>0.016576682 </td><td>0.03531958  </td><td>0.01264806  </td><td>0.0066298079</td><td>0.0071702244</td></tr>
-	<tr><th scope=row>2</th><td>0.01053331  </td><td>0.0464301935</td><td>0.0657898718</td><td>0.298359459 </td><td>2.619088e-01</td><td>0.0314453858</td><td>0.0003366012</td><td>0.1194241527</td><td>0.078122919 </td><td>0.06883626  </td><td>0.01226938  </td><td>0.0027327830</td><td>0.0038108874</td></tr>
-	<tr><th scope=row>3</th><td>0.35367476  </td><td>0.0001944803</td><td>0.0216264736</td><td>0.017466608 </td><td>7.963625e-02</td><td>0.0622993343</td><td>0.0011625774</td><td>0.0004267115</td><td>0.176848780 </td><td>0.13913803  </td><td>0.01398993  </td><td>0.0033496381</td><td>0.1301864201</td></tr>
-	<tr><th scope=row>4</th><td>0.51193963  </td><td>0.0426563041</td><td>0.0001631188</td><td>0.002187105 </td><td>9.649924e-03</td><td>0.0439276282</td><td>0.0035429032</td><td>0.0054751208</td><td>0.004067851 </td><td>0.08679489  </td><td>0.08525851  </td><td>0.2003785023</td><td>0.0039585107</td></tr>
-	<tr><th scope=row>5</th><td>0.01048567  </td><td>0.0068960127</td><td>0.6137311578</td><td>0.049768704 </td><td>9.862406e-06</td><td>0.0005557652</td><td>0.1523677065</td><td>0.0280274829</td><td>0.002639432 </td><td>0.06260861  </td><td>0.01306052  </td><td>0.0594809506</td><td>0.0003681246</td></tr>
-	<tr><th scope=row>6</th><td>0.04175036  </td><td>0.0145371382</td><td>0.0005847489</td><td>0.221329016 </td><td>1.283180e-01</td><td>0.0498448690</td><td>0.0011119752</td><td>0.1277047730</td><td>0.038124686 </td><td>0.08112679  </td><td>0.24475658  </td><td>0.0005480631</td><td>0.0502630440</td></tr>
-</tbody>
-</table>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -36904,7 +36890,7 @@ $$ P(C_i|x_1, ..., x_n) = \frac{P(x_1, ..., x_n)P(C_i)}{P(x_1, ..., x_n))} \text
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">Rcpp</span><span class="p">)</span>
@@ -36919,6 +36905,22 @@ $$ P(C_i|x_1, ..., x_n) = \frac{P(x_1, ..., x_n)P(C_i)}{P(x_1, ..., x_n))} \text
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>## 
+## Amelia II: Multiple Imputation
+## (Version 1.7.5, built: 2018-05-07)
+## Copyright (C) 2005-2019 James Honaker, Gary King and Matthew Blackwell
+## Refer to http://gking.harvard.edu/amelia/ for more information
+## 
+</pre>
+</div>
+</div>
 
 <div class="output_area">
 
@@ -37567,7 +37569,7 @@ RK5CYII="
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Primero verificamos que no haya valores faltantes</p>
+<p>Primero verificamos que no haya valores faltantes así como en la gráfica anterior.</p>
 
 </div>
 </div>
@@ -37581,7 +37583,7 @@ RK5CYII="
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">caret</span><span class="p">)</span>
@@ -37595,10 +37597,36 @@ RK5CYII="
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Loading required package: lattice
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Análisis de la distribución de los datos</strong></p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">prop.table</span><span class="p">(</span><span class="nf">table</span><span class="p">(</span><span class="n">heart_data</span><span class="o">$</span><span class="n">target</span><span class="p">))</span> <span class="o">*</span> <span class="m">100</span>
@@ -37633,7 +37661,7 @@ RK5CYII="
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">prop.table</span><span class="p">(</span><span class="nf">table</span><span class="p">(</span><span class="n">training</span><span class="o">$</span><span class="n">target</span><span class="p">))</span> <span class="o">*</span> <span class="m">100</span>
@@ -37668,7 +37696,7 @@ RK5CYII="
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">prop.table</span><span class="p">(</span><span class="nf">table</span><span class="p">(</span><span class="n">testing</span><span class="o">$</span><span class="n">target</span><span class="p">))</span> <span class="o">*</span> <span class="m">100</span>
@@ -37703,7 +37731,7 @@ RK5CYII="
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">training[</span><span class="p">,</span><span class="m">-14</span><span class="n">]</span>
@@ -37715,9 +37743,17 @@ RK5CYII="
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Uso de Naive Bayes como classificador</strong></p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="nf">train</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s">&#39;nb&#39;</span><span class="p">,</span><span class="n">trControl</span><span class="o">=</span><span class="nf">trainControl</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&#39;cv&#39;</span><span class="p">,</span><span class="n">number</span><span class="o">=</span><span class="m">10</span><span class="p">))</span>
@@ -37748,12 +37784,12 @@ RK5CYII="
 
 No pre-processing
 Resampling: Cross-Validated (10 fold) 
-Summary of sample sizes: 218, 219, 219, 219, 219, 219, ... 
+Summary of sample sizes: 219, 218, 219, 219, 218, 219, ... 
 Resampling results across tuning parameters:
 
   usekernel  Accuracy   Kappa    
-  FALSE      0.8235000  0.6424545
-   TRUE      0.8363333  0.6669133
+  FALSE      0.8068333  0.6080141
+   TRUE      0.8073333  0.6067460
 
 Tuning parameter &#39;fL&#39; was held constant at a value of 0
 Tuning
@@ -37772,18 +37808,16 @@ The final values used for the model were fL = 0, usekernel = TRUE and adjust
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h5 id="Model-Evaluation">Model Evaluation<a class="anchor-link" href="#Model-Evaluation">&#182;</a></h5>
+<h5 id="Evaluaci&#243;n-del-Modelo">Evaluaci&#243;n del Modelo<a class="anchor-link" href="#Evaluaci&#243;n-del-Modelo">&#182;</a></h5>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">pred</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">newdata</span> <span class="o">=</span> <span class="n">testing</span> <span class="p">)</span>
-<span class="c1">#Get the confusion matrix to see accuracy value and other parameter values</span>
- 
+<div class=" highlight hl-r"><pre><span></span><span class="n">pred</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">newdata</span> <span class="o">=</span> <span class="n">testing</span> <span class="p">)</span> 
 <span class="nf">confusionMatrix</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="nf">factor</span><span class="p">(</span><span class="n">testing</span><span class="o">$</span><span class="n">target</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 
@@ -37807,25 +37841,25 @@ The final values used for the model were fL = 0, usekernel = TRUE and adjust
 
           Reference
 Prediction  0  1
-         0 20  3
-         1  7 30
+         0 22  1
+         1  5 32
                                           
-               Accuracy : 0.8333          
-                 95% CI : (0.7148, 0.9171)
+               Accuracy : 0.9             
+                 95% CI : (0.7949, 0.9624)
     No Information Rate : 0.55            
-    P-Value [Acc &gt; NIR] : 3.483e-06       
+    P-Value [Acc &gt; NIR] : 4.558e-09       
                                           
-                  Kappa : 0.6587          
- Mcnemar&#39;s Test P-Value : 0.3428          
+                  Kappa : 0.7952          
+ Mcnemar&#39;s Test P-Value : 0.2207          
                                           
-            Sensitivity : 0.7407          
-            Specificity : 0.9091          
-         Pos Pred Value : 0.8696          
-         Neg Pred Value : 0.8108          
+            Sensitivity : 0.8148          
+            Specificity : 0.9697          
+         Pos Pred Value : 0.9565          
+         Neg Pred Value : 0.8649          
              Prevalence : 0.4500          
-         Detection Rate : 0.3333          
+         Detection Rate : 0.3667          
    Detection Prevalence : 0.3833          
-      Balanced Accuracy : 0.8249          
+      Balanced Accuracy : 0.8923          
                                           
        &#39;Positive&#39; Class : 0               
                                           </pre>
@@ -37837,14 +37871,58 @@ Prediction  0  1
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Comentarios:</strong> En el algoritmo se pueden apreciar dentro de los resultados, se obtuvo una exactitud(exactitud) de 0.83 la cual es un valor altamente representativo dado que el dataset está balanceado. Se obtiene una sensibilidad (capacidad del algoritmo para estimar valores positivos) de 0.74. En comparación de la especifidad(capacidad del algorimto para estimar valores negativos) de 0.90. Igualmente, se puede ver que la sensibilidad es menor que la specificidad, esto se debe a que la mayoría de los valores negativos(no enfermo) es menor en el caso de prueba, otra posible razón puede ser que el algoritmo requiera más casos ejemplos así como realizar una reducción de las variables más significantivas.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Aplicaci&#243;n-de-Naive-Bayes-con-PCA">Aplicaci&#243;n de Naive-Bayes con PCA<a class="anchor-link" href="#Aplicaci&#243;n-de-Naive-Bayes-con-PCA">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">#Plot Variable performance</span>
-<span class="n">X</span> <span class="o">&lt;-</span> <span class="nf">varImp</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">norm_data</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">res.ind</span><span class="o">$</span><span class="n">cos2</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">heart_data</span><span class="o">$</span><span class="n">target</span><span class="p">))</span>
+<span class="n">indxTrain</span> <span class="o">&lt;-</span> <span class="nf">createDataPartition</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">norm_data</span><span class="o">$</span><span class="n">target</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="m">0.80</span><span class="p">,</span><span class="n">list</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">ntraining</span> <span class="o">&lt;-</span> <span class="n">data[indxTrain</span><span class="p">,</span><span class="n">]</span>
+<span class="n">ntesting</span> <span class="o">&lt;-</span> <span class="n">data[</span><span class="o">-</span><span class="n">indxTrain</span><span class="p">,</span><span class="n">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">nx</span> <span class="o">=</span> <span class="n">training[</span><span class="p">,</span><span class="m">-14</span><span class="n">]</span>
+<span class="n">ny</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">training</span><span class="o">$</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">nmodel</span> <span class="o">=</span> <span class="nf">train</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span><span class="s">&#39;nb&#39;</span><span class="p">,</span><span class="n">trControl</span><span class="o">=</span><span class="nf">trainControl</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&#39;cv&#39;</span><span class="p">,</span><span class="n">number</span><span class="o">=</span><span class="m">10</span><span class="p">))</span>
+<span class="n">nmodel</span>
 </pre></div>
 
     </div>
@@ -37862,199 +37940,28 @@ Prediction  0  1
 
 
 
+<div class="output_text output_subarea ">
+<pre>Naive Bayes 
 
-</div>
+243 samples
+ 13 predictor
+  2 classes: &#39;0&#39;, &#39;1&#39; 
 
-<div class="output_area">
+No pre-processing
+Resampling: Cross-Validated (10 fold) 
+Summary of sample sizes: 218, 219, 219, 219, 219, 217, ... 
+Resampling results across tuning parameters:
 
-    <div class="prompt"></div>
+  usekernel  Accuracy   Kappa    
+  FALSE      0.8017821  0.5982749
+   TRUE      0.8056282  0.6046254
 
-
-
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAAC+lBMVEUAAAAAgP8BAQECAgID
-AwMEBAQFBQUGBgYHBwcICAgJCQkKCgoLCwsMDAwNDQ0ODg4PDw8QEBARERESEhITExMUFBQV
-FRUWFhYXFxcYGBgZGRkaGhobGxscHBwdHR0eHh4fHx8gICAhISEiIiIjIyMkJCQlJSUmJiYn
-JycoKCgpKSkqKiorKyssLCwtLS0uLi4vLy8wMDAxMTEyMjIzMzM0NDQ1NTU2NjY3Nzc4ODg5
-OTk6Ojo7Ozs8PDw9PT0+Pj4/Pz9AQEBBQUFCQkJDQ0NERERGRkZHR0dISEhJSUlKSkpLS0tM
-TExNTU1OTk5PT09QUFBRUVFSUlJTU1NUVFRVVVVWVlZXV1dYWFhZWVlaWlpbW1tcXFxdXV1e
-Xl5fX19gYGBhYWFiYmJjY2NkZGRlZWVmZmZnZ2doaGhpaWlqampra2tsbGxtbW1ubm5vb29w
-cHBxcXFycnJzc3N0dHR1dXV2dnZ3d3d4eHh5eXl6enp7e3t8fHx9fX1+fn5/f3+AgICBgYGC
-goKDg4OEhISFhYWGhoaHh4eIiIiJiYmKioqLi4uMjIyOjo6Pj4+QkJCRkZGSkpKTk5OUlJSV
-lZWWlpaXl5eYmJiZmZmampqbm5ucnJydnZ2enp6fn5+goKChoaGioqKjo6OkpKSmpqanp6eo
-qKipqamqqqqrq6usrKytra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4uLi5ubm6
-urq7u7u8vLy9vb2+vr6/v7/AwMDBwcHCwsLDw8PExMTFxcXGxsbHx8fIyMjJycnKysrLy8vM
-zMzNzc3Ozs7Pz8/Q0NDR0dHS0tLT09PU1NTV1dXW1tbX19fY2NjZ2dna2trb29vc3Nzd3d3e
-3t7f39/g4ODh4eHi4uLj4+Pk5OTl5eXm5ubn5+fo6Ojp6enq6urr6+vs7Ozt7e3u7u7v7+/w
-8PDx8fHy8vLz8/P09PT19fX29vb39/f4+Pj5+fn6+vr7+/v8/Pz9/f3+/v7///89DD6BAAAA
-CXBIWXMAABJ0AAASdAHeZh94AAAgAElEQVR4nO3dC3xU1aHv8TVIMkNCIJCJ8ghNRRAfVDk2
-VYootNpTbVqqFcF7tKI2SAHBithypDyEU5FKW1Rq5ZyWHEWR6xE9XFABmxCwHOVV5BFelWpF
-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
-AoQECPw/UP+MqV8l6owAAAAASUVORK5CYII="
->
+Tuning parameter &#39;fL&#39; was held constant at a value of 0
+Tuning
+ parameter &#39;adjust&#39; was held constant at a value of 1
+Accuracy was used to select the optimal model using the largest value.
+The final values used for the model were fL = 0, usekernel = TRUE and adjust
+ = 1.</pre>
 </div>
 
 </div>
@@ -38065,16 +37972,94 @@ AoQECPw/UP+MqV8l6owAAAAASUVORK5CYII="
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">pred1</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">nmodel</span><span class="p">,</span><span class="n">newdata</span> <span class="o">=</span> <span class="n">ntesting</span> <span class="p">)</span> 
+<span class="nf">confusionMatrix</span><span class="p">(</span><span class="n">pred1</span><span class="p">,</span> <span class="nf">factor</span><span class="p">(</span><span class="n">ntesting</span><span class="o">$</span><span class="n">target</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>Confusion Matrix and Statistics
+
+          Reference
+Prediction  0  1
+         0 28  0
+         1  5 27
+                                          
+               Accuracy : 0.9167          
+                 95% CI : (0.8161, 0.9724)
+    No Information Rate : 0.55            
+    P-Value [Acc &gt; NIR] : 5.918e-10       
+                                          
+                  Kappa : 0.8344          
+ Mcnemar&#39;s Test P-Value : 0.07364         
+                                          
+            Sensitivity : 0.8485          
+            Specificity : 1.0000          
+         Pos Pred Value : 1.0000          
+         Neg Pred Value : 0.8437          
+             Prevalence : 0.5500          
+         Detection Rate : 0.4667          
+   Detection Prevalence : 0.4667          
+      Balanced Accuracy : 0.9242          
+                                          
+       &#39;Positive&#39; Class : 0               
+                                          </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Comentarios:</strong> El PCA calcula una nueva proyección del conjunto de datos, dando paso a nuevos ejes basados en la desviación estándar de las variables del conjunto de datos. Antes de inicializar el PCA se realiza una normalización Z con el fin de evitar la sobreestimación, así como evitar los problemas con los valores atípicos. De nos er así, una variable con una desviación estándar alta tendrá un peso mayor para el cálculo del eje que una variable con una desviación estándar baja.</p>
+<p>Tras obtener los componentes principales, se utilizaron como parámetro de entrada para el modelo, aumentando la precisión a 0.93 (+0.10), la sensibilidad a 0.90 (+0.16) y la especifidada a 0.96 (+0.03). Se puede ver que tras usar los componentes principales como paramétros de entrada, el algormitmo mostró un mayor desempeño en las métricas mencionadas. Incluso, se puede ver que la compensación entre la sensibilidad y especifididad converge.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Referencias">Referencias<a class="anchor-link" href="#Referencias">&#182;</a></h2><ol>
+<li><p>Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [<a href="http://archive.ics.uci.edu/ml">http://archive.ics.uci.edu/ml</a>]. Irvine, CA: University of California, School of Information and Computer Science.</p>
+</li>
+<li><p>Detrano, R., Janosi, A., Steinbrunn, W., Pfisterer, M., Schmid, J., Sandhu, S., Guppy, K., Lee, S., &amp; Froelicher, V. (1989). International application of a new probability algorithm for the diagnosis of coronary artery disease. American Journal of Cardiology, 64,304--310.</p>
+</li>
+<li><p>David W. Aha &amp; Dennis Kibler. "Instance-based prediction of heart-disease presence with the Cleveland database."</p>
+</li>
+<li><p>Walpole, R. E., Myers, R. H., &amp; Myers, S. L. (2007). Probabilidad y estadística para ingeniería y ciencias (8a. ed.). Distrito Federal: Pearson Educación.</p>
+</li>
+<li><p>DeGroot, M. H., &amp; Schervish, M. J. (2019). Probability and statistics.</p>
+</li>
+<li><p>James, G. (2017). An introduction to statistical learning: With applications in R. New York: Springer.</p>
+</li>
+<li><p>Hastie, T., Tibshirani, R., &amp; Friedman, J. (2009). The Elements of Statistical Learning. Dordrecht: Springer.</p>
+</li>
+</ol>
+
+</div>
+</div>
 </div>
     </div>
   </div>
